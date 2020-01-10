@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @questions = Question.all
   end
@@ -7,15 +9,19 @@ class QuestionsController < ApplicationController
   end
 
   def new
-#    @question = Question.new
-  end
+    # должно работать без этой строки. Но в тестах вылезает
+    # Failure/Error: params.require(:question).permit(:title, :body)
+    #     ActionView::Template::Error:
+    #       param is missing or the value is empty: question
+    @question = Question.new
+   end
 
   def edit
   end
 
   def create
     if question.save
-      redirect_to question
+      redirect_to question, notice: 'Your question successfully created.'
     else
       render :new
     end
@@ -37,6 +43,7 @@ class QuestionsController < ApplicationController
 
   def question
     @question ||= params[:id] ? Question.find(params[:id]) : Question.new(question_params)
+
   end
 
   helper_method :question
