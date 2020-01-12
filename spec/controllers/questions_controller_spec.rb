@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let(:author) { create(:user) }
+  let(:question) { create(:question, user: author) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
+    let(:questions) { create_list(:question, 3, user: author) }
 
     before { get :index }
 
@@ -27,17 +28,16 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { login(user) }
-
-    before { get :new }
+    before { login(author) }
 
     it 'renders new view' do
-      expect(response).to render_template :new
+      expect(get :new, params: {}).to render_template :new
+
     end
   end
 
   describe 'GET #edit' do
-    before { login(user) }
+    before { login(author) }
 
     before { get :edit, params: { id: question } }
 
@@ -47,7 +47,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    before { login(user) }
+    before { login(author) }
 
     context 'with valid attributes' do
       it 'saves a new question in the database' do
@@ -71,7 +71,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    before { login(author) }
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
@@ -91,23 +91,26 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+      let(:params) { { id: question, question: attributes_for(:question, :invalid) } }
+
       it 'does not change question' do
+        original_question = question
         question.reload
 
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq original_question.title
+        expect(question.body).to eq original_question.body
       end
+
       it 're-renders edit view' do
-        expect(response).to render_template :edit
+        expect(patch :update, params: params).to render_template :edit
       end
     end
   end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
+    before { login(author) }
 
-    let!(:question) { create(:question) }
+    let!(:question) { create(:question, user: author) }
 
     it 'deletes the question' do
       expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)

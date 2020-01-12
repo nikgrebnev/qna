@@ -9,11 +9,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    # должно работать без этой строки. Но в тестах вылезает
-    # Failure/Error: params.require(:question).permit(:title, :body)
-    #     ActionView::Template::Error:
-    #       param is missing or the value is empty: question
-    @question = Question.new
+    @question = current_user.questions.new
    end
 
   def edit
@@ -42,8 +38,7 @@ class QuestionsController < ApplicationController
   private
 
   def question
-    @question ||= params[:id] ? Question.find(params[:id]) : Question.new(question_params)
-
+    @question ||= params[:id] ? Question.find(params[:id]) : current_user.questions.new(question_params)
   end
 
   helper_method :question

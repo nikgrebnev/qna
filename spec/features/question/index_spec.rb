@@ -5,7 +5,7 @@ feature 'Show all questions', %q{
   As an user
 } do
   given(:user) { create(:user) }
-  given!(:questions) { create_list(:question, 10) }
+  given!(:questions) { create_list(:question, 10, user: user) }
 
   scenario 'Index questions' do
     visit questions_path
