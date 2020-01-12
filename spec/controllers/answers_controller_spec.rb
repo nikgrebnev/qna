@@ -4,11 +4,11 @@ RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:author) { create(:user) }
   let(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer, question: question, user: author) }
 
 
 
   describe 'POST #create' do
+    let(:answer) { create(:answer, question: question, user: author) }
     let(:params) { { question_id: question, answer: attributes_for(:answer) } }
     before { login(author) }
 
@@ -36,4 +36,28 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+
+
+  describe 'DELETE #destroy' do
+    let!(:answer) { create(:answer, question: question, user: author) }
+
+    context 'As answer author' do
+      before { login(author) }
+      it 'deletes the answer' do
+        expect { delete :destroy, params: { id: answer } }.to change(question.answers, :count).by(-1)
+      end
+      it 'redirects to index' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to question
+      end
+    end
+    context 'As other user' do
+      before { login(user) }
+      it 'deletes the answer' do
+        expect { delete :destroy, params: { id: answer } }.to change(question.answers, :count).by(0)
+      end
+    end
+
+
+  end
 end

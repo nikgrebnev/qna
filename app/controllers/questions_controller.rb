@@ -32,9 +32,15 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    question.destroy
+    if current_user.author?(question)
+      question.destroy
+      flash[:notice] = 'Answer delete successfully'
+    else
+      flash[:alert] = "You can not delete"
+    end
     redirect_to questions_path
   end
+
   private
 
   def question

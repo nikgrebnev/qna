@@ -14,6 +14,17 @@ class AnswersController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    if current_user.author?(answer)
+      answer.destroy
+      flash[:notice] = 'Answer delete successfully'
+    else
+      flash[:alert] = "You can not delete"
+    end
+    redirect_to answer.question
+  end
+
   private
 
   def answer
