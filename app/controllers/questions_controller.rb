@@ -52,8 +52,7 @@ class QuestionsController < ApplicationController
     @answer ||= question.answers.new(user: current_user)
   end
   helper_method :answer
-
-
+  
   def question_params
     params.require(:question).permit(:title, :body)
   end
