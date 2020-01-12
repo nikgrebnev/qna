@@ -1,0 +1,4 @@
+li
+  = answer.body
+  - if user_signed_in? && current_user.author?(answer)
+    = link_to 'Delete', answer, method: :delete
