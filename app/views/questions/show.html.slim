@@ -1,6 +1,9 @@
 h1= question.title
 p= question.body
-- if user_signed_in? && current_user.author?(question)
+- if current_user&.author?(question)
   = link_to 'Delete', question, method: :delete
 ul
   = render partial: 'answers/answer', collection: question.answers.order(id: :asc)
+
+- if user_signed_in?
+  = render 'answers/form'

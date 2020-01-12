@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if user_signed_in? && current_user.author?(question)
+    if current_user&.author?(question)
       question.destroy
       flash[:notice] = 'Deleted successfully'
     else
@@ -46,8 +46,13 @@ class QuestionsController < ApplicationController
   def question
     @question ||= params[:id] ? Question.find(params[:id]) : current_user.questions.new(question_params)
   end
-
   helper_method :question
+
+  def answer
+    @answer ||= question.answers.new(user: current_user)
+  end
+  helper_method :answer
+
 
   def question_params
     params.require(:question).permit(:title, :body)
