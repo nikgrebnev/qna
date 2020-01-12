@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.new
-   end
+  end
 
   def edit
   end
