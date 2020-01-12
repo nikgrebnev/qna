@@ -2,8 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def new
-    @answer = question.answers.new()
-    @answer.user = current_user
+    @answer = question.answers.new(user: current_user)
   end
 
   def create

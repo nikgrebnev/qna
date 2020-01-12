@@ -15,8 +15,7 @@ feature 'reply question', %q{
     click_on 'Reply'
 
     expect(page).to have_content 'Test answer'
-
-    save_and_open_page
+#    save_and_open_page
   end
 
 end
