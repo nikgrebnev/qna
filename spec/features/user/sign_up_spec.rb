@@ -33,8 +33,6 @@ feature 'User can sign up', %q{
 
         expect(page).to have_content 'Email has already been taken'
       end
-
-
     end
 
 
@@ -56,7 +54,6 @@ feature 'User can sign up', %q{
       #save_and_open_page
       expect(page).to have_content 'Email is invalid'
     end
-
   end
 
   context 'as logged in user' do

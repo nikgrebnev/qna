@@ -14,5 +14,4 @@ feature 'show question', %q{
     expect(page).to have_content question.body
     expect(page).to have_content answer.body
   end
-
 end

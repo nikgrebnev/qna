@@ -14,5 +14,4 @@ feature 'Show all questions', %q{
       expect(page).to have_content question.title
     end
   end
-
 end

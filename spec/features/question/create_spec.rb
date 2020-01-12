@@ -38,7 +38,6 @@ feature 'User can create question', %q{
     click_on 'Ask question'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
-
   end
 
 end

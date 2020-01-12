@@ -17,5 +17,4 @@ feature 'reply question', %q{
     expect(page).to have_content 'Test answer'
 #    save_and_open_page
   end
-
 end

@@ -55,7 +55,5 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, params: { id: answer } }.to change(question.answers, :count).by(0)
       end
     end
-
-
   end
 end

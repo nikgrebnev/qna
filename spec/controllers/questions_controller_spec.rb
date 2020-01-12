@@ -32,7 +32,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'renders new view' do
       expect(get :new, params: {}).to render_template :new
-
     end
   end
 
@@ -90,6 +89,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to redirect_to question
       end
     end
+
     context 'with invalid attributes' do
       let(:params) { { id: question, question: attributes_for(:question, :invalid) } }
 
@@ -126,7 +126,5 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(0)
       end
     end
-
-
   end
 end
