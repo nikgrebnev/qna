@@ -49,9 +49,11 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(author) }
 
     context 'with valid attributes' do
+
       it 'saves a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
+
       it 'redirects to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
@@ -59,9 +61,11 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
+
       it 'does not save the question' do
         expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
       end
+
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
@@ -73,10 +77,12 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(author) }
 
     context 'with valid attributes' do
+
       it 'assigns the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
         expect(assigns(:question)).to eq question
       end
+
       it 'change question attributes' do
         patch :update, params: { id: question, question: { title: 'new title', body: 'new body'} }
         question.reload
@@ -84,6 +90,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
+
       it 'redirects to updated question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
         expect(response).to redirect_to question
@@ -112,9 +119,11 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'As question author' do
       before { login(author) }
+
       it 'deletes the question' do
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
+
       it 'redirects to index' do
         delete :destroy, params: { id: question }
         expect(response).to redirect_to questions_path
@@ -122,6 +131,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
     context 'As other user' do
       before { login(user) }
+
       it 'deletes the question' do
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(0)
       end

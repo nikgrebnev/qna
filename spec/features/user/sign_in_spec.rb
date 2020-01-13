@@ -33,7 +33,6 @@ feature 'User can sign in', %q{
     end
   end
 
-
   scenario 'Unregistered user tries to sign in' do
     fill_in 'Email', with: 'wrong_user@example.com'
     fill_in 'Password', with: '12345678'
