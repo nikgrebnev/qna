@@ -47,15 +47,16 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     before { login(author) }
+    let(:params) { { question: attributes_for(:question) } }
 
     context 'with valid attributes' do
 
       it 'saves a new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect { post :create, params: params }.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: { question: attributes_for(:question) }
+        post :create, params: params
         expect(response).to redirect_to assigns(:question)
       end
     end
@@ -69,6 +70,19 @@ RSpec.describe QuestionsController, type: :controller do
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
+      end
+    end
+
+    context  'unlogged user' do
+      before { sign_out(author) }
+
+      it 'does not save question' do
+        expect { post :create, params: params }.to_not change(Question, :count)
+      end
+
+      it 'redirect to sign in' do
+        post :create, params: params
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end
