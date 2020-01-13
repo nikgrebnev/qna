@@ -1,16 +1,16 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!
 
-  def new
-    @answer = question.answers.new(user: current_user)
-  end
+#  def new
+#    @answer = question.answers.new(user: current_user)
+#  end
 
   def create
     answer.user = current_user
     if answer.save
       redirect_to answer.question
     else
-      render :new
+      render answer.question
     end
   end
 
