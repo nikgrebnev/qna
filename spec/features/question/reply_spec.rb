@@ -7,7 +7,7 @@ feature 'reply question', %q{
   given(:author) { create(:user) }
   given(:question) { create(:question, user: author) }
 
-  scenario 'reply question from refistered user' do
+  scenario 'reply question from registered user' do
     log_in(user)
     visit question_path(question)
 
@@ -17,4 +17,20 @@ feature 'reply question', %q{
     expect(page).to have_content 'Test answer'
 #    save_and_open_page
   end
+
+  scenario 'check invalid body' do
+    log_in(user)
+    visit question_path(question)
+
+    click_on 'Reply'
+    expect(page).to have_content "Body can't be blank"
+  end
+
+  scenario 'reply question from unregistered user' do
+    visit question_path(question)
+    expect(page).to_not have_selector(:link_or_button, 'Reply')
+  end
 end
+
+
+

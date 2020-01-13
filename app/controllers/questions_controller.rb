@@ -54,6 +54,7 @@ class QuestionsController < ApplicationController
   helper_method :answer
   
   def question_params
+#    return nil if action_name == "new"
     params.require(:question).permit(:title, :body)
   end
 end

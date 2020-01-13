@@ -17,7 +17,6 @@ feature 'delete answer', %q{
     click_on 'Delete'
 
     expect(page).to have_content 'Deleted successfully'
-    visit question_path(question)
     expect(page).to_not have_content answer.body
   end
 

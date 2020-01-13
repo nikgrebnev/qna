@@ -74,7 +74,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, params: { id: answer } }.to change(question.answers, :count).by(0)
       end
 
-      it 'redirect to sign in' do
+      it 'redirect to question' do
         delete :destroy, params: { id: answer }
         expect(response).to redirect_to question
       end

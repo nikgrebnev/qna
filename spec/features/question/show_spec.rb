@@ -5,13 +5,15 @@ feature 'show question', %q{
 
   given(:author) { create(:user) }
   given(:question) { create(:question, user: author) }
-  given!(:answer) { create(:answer, question: question, user: author) }
+  given!(:answers) { create_list(:answer, 10, question: question, user: author) }
 
-  scenario 'show question with answer' do
+  scenario 'show question with answers' do
     visit question_path(question)
 
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    expect(page).to have_content answer.body
+    answers.each do |answer|
+      expect(page).to have_content answer.body
+    end
   end
 end
