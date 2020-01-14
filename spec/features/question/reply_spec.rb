@@ -27,7 +27,7 @@ feature 'reply question', %q{
 
   scenario 'reply question from unregistered user' do
     visit question_path(question)
-    expect(page).to_not have_selector(:link_or_button, 'Reply')
+    expect(page).to_not have_button, 'Reply'
   end
 end
 
