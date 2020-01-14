@@ -22,11 +22,10 @@ feature 'User can sign in', %q{
 
     scenario 'tries to sign in' do
       expect(page).to have_content 'Signed in successfully.'
-  #    save_and_open_page
     end
 
     scenario 'logged in tries to sign in' do
-      expect(page).to_not have_selector(:link_or_button, 'Sign in')
+      expect(page).to_not have_link 'Sign in'
 
       visit new_user_session_path
       expect(page).to have_content  'You are already signed in.'

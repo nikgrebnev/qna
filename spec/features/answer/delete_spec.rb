@@ -13,7 +13,7 @@ feature 'delete answer', %q{
     log_in(author)
     visit question_path(question)
 
-    expect(page).to have_selector(:link_or_button, 'Delete')
+    expect(page).to have_link 'Delete'
     click_on 'Delete'
 
     expect(page).to have_content 'Deleted successfully'
@@ -24,12 +24,12 @@ feature 'delete answer', %q{
     log_in(user)
     visit question_path(question)
 
-    expect(page).to_not have_selector(:link_or_button, 'Delete')
+    expect(page).to_not have_link 'Delete'
   end
 
   scenario 'check delete button from unlogged user' do
     visit question_path(question)
 
-    expect(page).to_not have_selector(:link_or_button, 'Delete')
+    expect(page).to_not have_link 'Delete'
   end
 end

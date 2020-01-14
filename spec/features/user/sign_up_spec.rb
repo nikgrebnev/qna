@@ -51,7 +51,6 @@ feature 'User can sign up', %q{
       fill_in 'Password confirmation', with: '12345678'
       click_on 'Sign up'
 
-      #save_and_open_page
       expect(page).to have_content 'Email is invalid'
     end
   end

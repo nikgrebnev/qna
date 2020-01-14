@@ -11,7 +11,7 @@ feature 'User can sign out', %q{
   scenario 'Registered user tries to sign out' do
     log_in(user)
 
-    expect(page).to have_selector(:link_or_button, 'Log out')
+    expect(page).to have_link 'Log out'
 
     click_on 'Log out'
 
@@ -19,7 +19,6 @@ feature 'User can sign out', %q{
   end
 
   scenario 'Unregistered user tries to sign out' do
-#    save_and_open_page
-    expect(page).to_not have_selector(:link_or_button, 'Log out')
+    expect(page).to_not have_link 'Log out'
   end
 end

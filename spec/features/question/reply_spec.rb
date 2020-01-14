@@ -15,7 +15,6 @@ feature 'reply question', %q{
     click_on 'Reply'
 
     expect(page).to have_content 'Test answer'
-#    save_and_open_page
   end
 
   scenario 'check invalid body' do
