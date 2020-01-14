@@ -17,8 +17,9 @@ class QuestionsController < ApplicationController
 
   def create
     if question.save
-      redirect_to question, notice: 'Your question successfully created.'
+      redirect_to question, notice: 'Successfully added.'
     else
+      flash.now[:alert] = "Unable to add!"
       render :new
     end
   end

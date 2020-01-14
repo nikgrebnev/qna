@@ -4,8 +4,10 @@ class AnswersController < ApplicationController
   def create
     answer.user = current_user
     if answer.save
+      flash[:notice] = "Successfully added."
       redirect_to  question
     else
+      flash.now[:alert] = "Unable to add!"
       render 'questions/show'
     end
   end
