@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
     else
       flash[:alert] = "You can not delete"
     end
-    redirect_to question
+    redirect_to answer.question
   end
 
   private
