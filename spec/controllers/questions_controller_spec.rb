@@ -61,7 +61,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'check correct author user_id' do
-        expect { post :create, params: params }.to change(author.questions, :count).by(1)
+        post :create, params: params
+        expect(assigns(:question).user).to eq(author)
       end
     end
 

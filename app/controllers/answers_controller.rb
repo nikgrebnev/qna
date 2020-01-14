@@ -32,6 +32,7 @@ class AnswersController < ApplicationController
     @question ||= Question.find(params[:question_id])
   end
 
+
   helper_method :answer
   helper_method :question
 
