@@ -22,6 +22,10 @@ RSpec.describe AnswersController, type: :controller do
         post :create, params: params
         expect(response).to redirect_to assigns(:question)
       end
+
+      it 'check correct author user_id' do
+        expect { post :create, params: params }.to change(author.answers, :count).by(1)
+      end
     end
 
     context 'with invalid attributes' do
