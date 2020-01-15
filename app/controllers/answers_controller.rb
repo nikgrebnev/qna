@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   private
 
   def answer
-    @answer ||= params[:id] ? Answer.find(params[:id]) : question.answers.new(answer_params)
+    @answer ||= params[:id] ? Answer.find(params[:id]) : Answer.new(answer_params.merge(question: question))
   end
 
   def question
