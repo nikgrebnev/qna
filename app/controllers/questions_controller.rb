@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
     end
     redirect_to questions_path
   end
-  #  = render question.answers.reject(&:new_record?)
+
   private
 
   def question
