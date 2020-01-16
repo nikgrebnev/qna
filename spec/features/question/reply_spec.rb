@@ -7,17 +7,20 @@ feature 'reply question', %q{
   given(:author) { create(:user) }
   given(:question) { create(:question, user: author) }
 
-  scenario 'reply question from registered user' do
+  scenario 'reply question from registered user', js: true do
     log_in(user)
     visit question_path(question)
 
     fill_in 'Answer', with: 'Test answer'
     click_on 'Reply'
 
-    expect(page).to have_content 'Test answer'
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).to have_content 'Test answer'
+    end
   end
 
-  scenario 'check invalid body' do
+  scenario 'check invalid body', js: true do
     log_in(user)
     visit question_path(question)
 
