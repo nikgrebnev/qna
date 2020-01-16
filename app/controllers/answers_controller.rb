@@ -6,9 +6,9 @@ class AnswersController < ApplicationController
     if answer.save
       flash[:notice] = "Successfully added."
       redirect_to  question
-    else
-      flash.now[:alert] = "Unable to add!"
-      render 'questions/show'
+#    else
+#      flash.now[:alert] = "Unable to add!"
+#      render 'questions/show'
     end
   end
 
