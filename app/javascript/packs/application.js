@@ -17,4 +17,5 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 require("jquery")
-
+require("popper.js")
+require("bootstrap");
