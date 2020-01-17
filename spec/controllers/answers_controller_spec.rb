@@ -9,7 +9,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     let(:answer) { create(:answer, question: question, user: author) }
-    let(:params) { { question_id: question, answer: attributes_for(:answer) } }
+    let(:params) { { question_id: question, answer: attributes_for(:answer), format: :js } }
     before { login(author) }
 
     context 'with valid attributes' do
@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: params
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to render_template :create
       end
 
       it 'check correct author user_id' do
@@ -30,7 +30,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      let(:params) { { question_id: question, answer: attributes_for(:answer, :invalid) } }
+      let(:params) { { question_id: question, answer: attributes_for(:answer, :invalid), format: :js } }
 
       it 'does not save the answer' do
         expect { post :create, params: params }.to_not change(Answer, :count)
@@ -38,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders new view' do
         post :create, params: params
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to sign in' do
         post :create, params: params
-        expect(response).to redirect_to new_user_session_path
+        expect(response).to have_http_status(401)
       end
     end
   end
