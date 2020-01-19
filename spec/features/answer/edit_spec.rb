@@ -7,9 +7,10 @@ feature 'User can edit his answer', %q{
 } do
 
   given!(:user) { create(:user) }
-  given(:author) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question) }
+  given!(:author) { create(:user) }
+  given!(:author_question) { create(:user) }
+  given!(:question) { create(:question, user: author_question) }
+  given!(:answer) { create(:answer, question: question, user: author) }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
@@ -25,7 +26,7 @@ feature 'User can edit his answer', %q{
       click_on 'Edit'
 
       within '.answers' do
-        fill_in 'Your answer', with: 'edited answer'
+        fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
