@@ -126,6 +126,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'changes answer attributes' do
         patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         answer.reload
+        # такая проверка нормальная? Или лучше по-другому?
         expect(answer.body).to_not eq 'new body'
       end
     end
