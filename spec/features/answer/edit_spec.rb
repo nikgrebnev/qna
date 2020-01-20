@@ -19,7 +19,7 @@ feature 'User can edit his answer', %q{
   end
 
   describe 'Authenticated user' do
-    scenario 'edits his answer', js: true do
+    scenario 'author edits his answer', js: true do
       log_in author
       visit question_path(question)
 
@@ -35,7 +35,26 @@ feature 'User can edit his answer', %q{
       end
     end
 
-    scenario 'edits his answer with errors'
-    scenario "tries to edit other user's question"
+    scenario 'edits his answer with errors', js: true do
+      log_in author
+      visit question_path(question)
+
+      click_on 'Edit'
+
+      within '.answers' do
+        fill_in 'Answer', with: ''
+        click_on 'Save'
+
+        expect(page).to have_content answer.body
+      end
+
+    end
+    scenario "tries to edit other user's question" do
+      log_in user
+      visit question_path(question)
+
+      expect(page).to_not have_link 'Edit'
+
+    end
   end
 end
