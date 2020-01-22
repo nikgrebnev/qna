@@ -131,4 +131,38 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #make_best' do
+    let!(:answer) { create(:answer, question: question, user: author) }
+
+    context 'question owner' do
+      before { login(user) }
+
+      context 'with valid attributes' do
+
+        it 'changes answer attributes' do
+          patch :make_best, params: { id: answer }, format: :js
+          answer.reload
+          expect(answer.best).to eq true
+        end
+
+        it 'renders update view' do
+          patch :make_best, params: { id: answer }, format: :js
+          expect(response).to render_template :make_best
+        end
+      end
+    end
+
+    context 'other user, with valid attributes' do
+      before { login(author) }
+
+      it 'changes answer attributes' do
+        patch :make_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+    end
+  end
+
+
 end

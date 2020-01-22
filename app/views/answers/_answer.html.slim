@@ -5,9 +5,15 @@ p
 
     = link_to 'Delete', answer, method: :delete, remote: true
 
+
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       p
         = f.label :body, 'Answer'
         = f.text_area :body
       p
         = f.submit 'Save'
+
+  - if answer.best
+    b Best Answer
+  - elsif current_user&.author?(question)
+    = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true

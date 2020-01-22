@@ -18,6 +18,11 @@ class AnswersController < ApplicationController
     end
   end
 
+  def make_best
+    if current_user.author?(question)
+      answer.make_best
+    end
+  end
   private
 
   def answer
