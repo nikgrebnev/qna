@@ -1,7 +1,8 @@
 p
   - if answer.best
-    b Best Answer
-    = octicon 'heart', class: 'text-danger'
+    .best-answer
+      b Best Answer
+      = octicon 'heart', class: 'text-danger'
   = answer.body
   - if current_user&.author?(answer)
     = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }

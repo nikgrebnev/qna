@@ -12,9 +12,12 @@ feature 'best answer', %q{
     log_in(author)
     visit question_path(question)
 
+    expect(page).to_not have_css(".best-answer")
     expect(page).to have_link 'Make best answer'
     click_on 'Make best answer' , :match => :first
+    
     expect(page).to have_content 'Best Answer'
+    expect(page).to have_css(".best-answer")
   end
 
   scenario 'not author can not choose best answer', js: true do
