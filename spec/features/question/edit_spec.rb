@@ -49,7 +49,6 @@ feature 'User can edit his question', %q{
         expect(page).to have_content question.title
         expect(page).to have_content question.body
       end
-
     end
 
     scenario "tries to edit other user's question" do

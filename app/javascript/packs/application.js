@@ -28,7 +28,6 @@ $(document).on('turbolinks:load',function () {
         $('form#edit-question-' + questionId).removeClass('hidden')
     })
 
-
     $('.answers').on('click', '.make-best-answer-link', function(e) {
         e.preventDefault();
         $(this).hide();
@@ -46,5 +45,4 @@ $(document).on('turbolinks:load',function () {
     $('.answers').on('click', '.delete-answer-link', function(e) {
         var answerId = $(this).data('answerId');
     })
-
 });
