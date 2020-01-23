@@ -16,6 +16,7 @@ RSpec.describe Answer, type: :model do
       best_answer.make_best!
       question.answers.reload
       expect(question.answers).to_not eq answers
+      expect(question.answers.first).to eq best_answer
     end
   end
 

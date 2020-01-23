@@ -26,4 +26,14 @@ feature 'best answer', %q{
 
     expect(page).to_not have_link 'Make best answer'
   end
+
+  scenario 'best answer show in first position', js: true do
+    log_in(author)
+    visit question_path(question)
+
+    within("#answer#{answers.last.id}") do
+      click_on 'Make best answer'
+      expect(page).to have_content 'Best Answer'
+    end
+  end
 end

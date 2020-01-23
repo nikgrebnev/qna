@@ -41,8 +41,4 @@ $(document).on('turbolinks:load',function () {
         var answerId = $(this).data('answerId');
         $('form#edit-answer-' + answerId).removeClass('hidden')
     })
-
-    $('.answers').on('click', '.delete-answer-link', function(deleteAnswerLink) {
-        var answerId = $(this).data('answerId');
-    })
 });

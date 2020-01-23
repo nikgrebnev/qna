@@ -151,7 +151,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'changes answer attributes' do
           answer.reload
-          expect(answer.best).to be_truthy
+          expect(answer).to be_best
         end
 
         it 'renders update view' do
@@ -168,7 +168,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'changes answer attributes' do
         answer.reload
-        expect(answer.best).to be_falsey
+        expect(answer).to_not be_best
       end
 
       it 'check render' do
