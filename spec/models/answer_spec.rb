@@ -13,7 +13,7 @@ RSpec.describe Answer, type: :model do
     let(:best_answer) { create(:answer, question: question, user: user) }
 
     it 'shows best answer first' do
-      best_answer.make_best
+      best_answer.make_best!
       question.answers.reload
       expect(question.answers.first).to eq best_answer
     end

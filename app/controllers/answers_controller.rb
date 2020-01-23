@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
 
   def make_best
     if current_user.author?(question)
-      answer.make_best
+      answer.make_best!
     end
   end
   private

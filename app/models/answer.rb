@@ -6,7 +6,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  def make_best
+  def make_best!
     transaction do
       self.question.answers.update_all(best: false)
       update!(best: true)
