@@ -34,7 +34,10 @@ feature 'best answer', %q{
     within("#answer#{answers.last.id}") do
       click_on 'Make best answer'
       expect(page).to have_content 'Best Answer'
-      #я похоже тут проверил только то что вопрос стал лучшим. Но не проверил что он стал первым
+    end
+    within('.answers') do
+      first_answer = all('div').first
+      expect(first_answer).to have_content('Best Answer')
     end
   end
 end
