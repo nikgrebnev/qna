@@ -34,7 +34,8 @@ RSpec.describe Answer, type: :model do
     it 'set another' do
       answers.first.make_best!
       answers.last.make_best!
-      answers.first.reload
+#      answers.first.reload
+      answers.each { |answer| answer.reload }
       expect(answers.first.best?).to be_falsey
       expect(answers.last.best?).to be_truthy
     end
