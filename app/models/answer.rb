@@ -7,7 +7,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   def make_best
-    ActiveRecord::Base.transaction do
+    transaction do
       self.question.answers.update_all(best: false)
       update!(best: true)
     end
