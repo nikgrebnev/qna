@@ -27,14 +27,13 @@ RSpec.describe Answer, type: :model do
     it 'set best' do
       best_answer = answers.first
       best_answer.make_best!
+      answers.each { |answer| answer.reload }
       expect(best_answer.best?).to be_truthy
       expect(answers.last.best?).to be_falsey
     end
 
     it 'set another' do
-      answers.first.make_best!
-      answers.last.make_best!
-#      answers.first.reload
+      answers.each { |answer| answer.make_best! }
       answers.each { |answer| answer.reload }
       expect(answers.first.best?).to be_falsey
       expect(answers.last.best?).to be_truthy
