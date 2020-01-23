@@ -110,6 +110,7 @@ RSpec.describe AnswersController, type: :controller do
         it 'does not change answer attributes' do
           expect do
             patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+            answer.reload
           end.to_not change(answer, :body)
         end
 
@@ -124,10 +125,15 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       it 'changes answer attributes' do
+        answer_previous = answer
         patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         answer.reload
-        # такая проверка нормальная? Или лучше по-другому?
-        expect(answer.body).to_not eq 'new body'
+        expect(answer.body).to eq answer_previous.body
+      end
+
+      it 'check render' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+        expect(response).to render_template :update
       end
     end
   end
@@ -143,7 +149,7 @@ RSpec.describe AnswersController, type: :controller do
         it 'changes answer attributes' do
           patch :make_best, params: { id: answer }, format: :js
           answer.reload
-          expect(answer.best).to eq true
+          expect(answer.best).to be_truthy
         end
 
         it 'renders update view' do
@@ -159,7 +165,12 @@ RSpec.describe AnswersController, type: :controller do
       it 'changes answer attributes' do
         patch :make_best, params: { id: answer }, format: :js
         answer.reload
-        expect(answer.best).to eq false
+        expect(answer.best).to be_falsey
+      end
+
+      it 'check render' do
+        patch :make_best, params: { id: answer }, format: :js
+        expect(response).to render_template :make_best
       end
     end
   end
