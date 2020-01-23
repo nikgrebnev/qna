@@ -17,5 +17,9 @@ RSpec.describe Answer, type: :model do
       question.answers.reload
       expect(question.answers).to_not eq answers
     end
+
+    describe 'test make_best' do
+
+    end
   end
 end

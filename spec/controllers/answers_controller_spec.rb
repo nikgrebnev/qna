@@ -142,34 +142,36 @@ RSpec.describe AnswersController, type: :controller do
     let!(:answer) { create(:answer, question: question, user: author) }
 
     context 'question owner' do
-      before { login(user) }
+      before do
+        login(user)
+        patch :make_best, params: { id: answer }, format: :js
+      end
 
       context 'with valid attributes' do
 
         it 'changes answer attributes' do
-          patch :make_best, params: { id: answer }, format: :js
           answer.reload
           expect(answer.best).to be_truthy
         end
 
         it 'renders update view' do
-          patch :make_best, params: { id: answer }, format: :js
           expect(response).to render_template :make_best
         end
       end
     end
 
     context 'other user, with valid attributes' do
-      before { login(author) }
+      before do
+        login(author)
+        patch :make_best, params: { id: answer }, format: :js
+      end
 
       it 'changes answer attributes' do
-        patch :make_best, params: { id: answer }, format: :js
         answer.reload
         expect(answer.best).to be_falsey
       end
 
       it 'check render' do
-        patch :make_best, params: { id: answer }, format: :js
         expect(response).to render_template :make_best
       end
     end
