@@ -21,28 +21,28 @@ require("popper.js")
 require("bootstrap");
 
 $(document).on('turbolinks:load',function () {
-    $('.question').on('click', '.edit-question-link', function(e) {
-        e.preventDefault();
+    $('.question').on('click', '.edit-question-link', function(editLink) {
+        editLink.preventDefault();
         $(this).hide();
         var questionId = $(this).data('questionId');
         $('form#edit-question-' + questionId).removeClass('hidden')
     })
 
-    $('.answers').on('click', '.make-best-answer-link', function(e) {
-        e.preventDefault();
+    $('.answers').on('click', '.make-best-answer-link', function(bestLink) {
+        bestLink.preventDefault();
         $(this).hide();
         var answerId = $(this).data('answerId');
         $('form#edit-answer-' + answerId).removeClass('hidden')
     })
 
-    $('.answers').on('click', '.edit-answer-link', function(e) {
-        e.preventDefault();
+    $('.answers').on('click', '.edit-answer-link', function(editAnswerLink) {
+        editAnswerLink.preventDefault();
         $(this).hide();
         var answerId = $(this).data('answerId');
         $('form#edit-answer-' + answerId).removeClass('hidden')
     })
 
-    $('.answers').on('click', '.delete-answer-link', function(e) {
+    $('.answers').on('click', '.delete-answer-link', function(deleteAnswerLink) {
         var answerId = $(this).data('answerId');
     })
 });

@@ -15,7 +15,7 @@ feature 'best answer', %q{
     expect(page).to_not have_css(".best-answer")
     expect(page).to have_link 'Make best answer'
     click_on 'Make best answer' , :match => :first
-    
+
     expect(page).to have_content 'Best Answer'
     expect(page).to have_css(".best-answer")
   end
