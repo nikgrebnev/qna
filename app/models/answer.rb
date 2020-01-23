@@ -5,6 +5,7 @@ class Answer < ApplicationRecord
   default_scope { order(best: :desc, created_at: :asc) }
 
   validates :body, presence: true
+  validates :best, uniqueness: { scope: :question_id }, if: :best?
 
   def make_best!
     transaction do
