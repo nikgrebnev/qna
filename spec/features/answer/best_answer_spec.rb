@@ -35,6 +35,7 @@ feature 'best answer', %q{
       click_on 'Make best answer'
       expect(page).to have_content 'Best Answer'
     end
+    
     within('.answers') do
       first_answer = all('div').first
       expect(first_answer).to have_content('Best Answer')
