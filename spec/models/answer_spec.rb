@@ -9,13 +9,13 @@ RSpec.describe Answer, type: :model do
   describe 'default_scope' do
     let(:user) { create(:user) }
     let(:question) { create(:question, user: user) }
-    let!(:answer) { create(:answer, question: question, user: user) }
-    let!(:best_answer) { create(:answer, question: question, user: user) }
+    let!(:answers) { create_list(:answer, 2, question: question, user: user) }
 
     it 'shows best answer first' do
+      best_answer = answers.last
       best_answer.make_best!
       question.answers.reload
-      expect(question.answers.first).to eq best_answer
+      expect(question.answers).to_not eq answers
     end
   end
 end
