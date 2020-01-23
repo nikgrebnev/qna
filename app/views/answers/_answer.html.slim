@@ -16,5 +16,5 @@ p
       p
         = f.submit 'Save'
 
-  - if current_user&.author?(question) && !answer.best
+  - if current_user&.author?(question) && !answer.best?
     = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true
