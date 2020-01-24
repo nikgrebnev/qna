@@ -4,13 +4,16 @@ html
     title Qna
     = csrf_meta_tags
     = csp_meta_tag
+    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
     = render 'layouts/nav'
-    p.notice = notice
-    p.alert = alert
+    
+    .container
+      p.notice = notice
+	  p.alert = alert
 
-    = yield
+      = yield
