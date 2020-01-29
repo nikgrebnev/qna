@@ -22,4 +22,6 @@ p= question.body
       = f.label :body, 'Body'
       = f.text_area :body
     p
-      = f.submit 'Save'
+      = f.label :files
+      = f.file_field :files, multiple: true
+    p= f.submit 'Save'

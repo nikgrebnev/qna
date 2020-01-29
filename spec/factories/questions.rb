@@ -9,9 +9,9 @@ FactoryBot.define do
     end
 
     trait :with_file do
-      files do
-        fixture_file_upload("#{Rails.root}/spec/spec_helper.rb")
-        fixture_file_upload("#{Rails.root}/spec/rails_helper.rb")
+      after :create do |question|
+        file = fixture_file_upload("#{Rails.root}/spec/spec_helper.rb")
+        question.files.attach(file)
       end
     end
 
