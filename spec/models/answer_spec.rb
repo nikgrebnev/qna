@@ -6,6 +6,15 @@ RSpec.describe Answer, type: :model do
 
   it { should validate_presence_of :body }
 
+  describe 'attaches' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    it 'have many attached files' do
+      expect(question.answers.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+    end
+  end
+
   describe 'default_scope' do
     let(:user) { create(:user) }
     let(:question) { create(:question, user: user) }
