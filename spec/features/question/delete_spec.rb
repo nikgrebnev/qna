@@ -43,6 +43,7 @@ feature 'delete question', %q{
         expect(page).to have_link 'spec_helper.rb'
         expect(page).to have_link('Delete')
         click_on 'Delete'
+        expect(page).to_not have_link 'spec_helper.rb'
         expect(page).to_not have_link('Delete')
       end
     end
