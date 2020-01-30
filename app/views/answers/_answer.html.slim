@@ -4,6 +4,9 @@ div id="answer#{answer.id}"
       b Best Answer
       = octicon 'heart', class: 'text-danger'
   = answer.body
+  .answer-attaches
+    = render 'attachments/show', resource: answer
+
   - if current_user&.author?(answer)
     = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
@@ -14,7 +17,9 @@ div id="answer#{answer.id}"
         = f.label :body, 'Answer'
         = f.text_area :body
       p
-        = f.submit 'Save'
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p= f.submit 'Save'
 
   - if current_user&.author?(question) && !answer.best?
     = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true

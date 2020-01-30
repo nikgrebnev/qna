@@ -1,5 +1,8 @@
 h1= question.title
 p= question.body
+.question-attaches
+  = render 'attachments/show', resource: question
+
 - if current_user&.author?(question)
   = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
   = link_to 'Delete', question, method: :delete
@@ -15,4 +18,6 @@ p= question.body
       = f.label :body, 'Body'
       = f.text_area :body
     p
-      = f.submit 'Save'
+      = f.label :files
+      = f.file_field :files, multiple: true, direct_upload: true
+    p= f.submit 'Save'

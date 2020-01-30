@@ -17,7 +17,7 @@ feature 'User can edit his question', %q{
   end
 
   describe 'Authenticated user' do
-    scenario 'author edits his answer', js: true do
+    scenario 'author edits his question', js: true do
       log_in author
       visit question_path(question)
 
@@ -32,6 +32,21 @@ feature 'User can edit his question', %q{
         expect(page).to have_content 'Test question'
         expect(page).to have_content 'test body'
         expect(page).to_not have_selector 'textarea'
+      end
+    end
+
+    scenario 'author edits his question and add attaches', js: true do
+      log_in author
+      visit question_path(question)
+
+      within '.question' do
+        click_on 'Edit'
+
+        attach_file 'File', ["#{Rails.root}/spec/spec_helper.rb", "#{Rails.root}/spec/rails_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'spec_helper.rb'
+        expect(page).to have_link 'rails_helper.rb'
       end
     end
 

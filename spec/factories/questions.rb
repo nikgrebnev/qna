@@ -8,6 +8,13 @@ FactoryBot.define do
       "Question body #{n} body body"
     end
 
+    trait :with_file do
+      after :create do |question|
+        file = fixture_file_upload("#{Rails.root}/spec/spec_helper.rb")
+        question.files.attach(file)
+      end
+    end
+
     trait :invalid do
       title { nil }
     end
