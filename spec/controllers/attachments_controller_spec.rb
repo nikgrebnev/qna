@@ -25,7 +25,7 @@ RSpec.describe AttachmentsController, type: :controller do
       before { login(user) }
 
       it 'deletes the attach' do
-        expect { delete :destroy, params: { id: question.files.first, format: :js } }.to change(question.files, :count).by(0)
+        expect { delete :destroy, params: { id: question.files.first, format: :js } }.to_not change(question.files, :count)
       end
 
       it 'redirect to question' do
@@ -51,7 +51,7 @@ RSpec.describe AttachmentsController, type: :controller do
       before { login(user) }
 
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer.files.first, format: :js } }.to change(answer.files, :count).by(0)
+        expect { delete :destroy, params: { id: answer.files.first, format: :js } }.to_not change(answer.files, :count)
       end
 
       it 'redirect to question' do
