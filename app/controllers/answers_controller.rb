@@ -23,6 +23,7 @@ class AnswersController < ApplicationController
       answer.make_best!
     end
   end
+
   private
 
   def answer
@@ -33,11 +34,10 @@ class AnswersController < ApplicationController
     @question ||= params[:question_id] ? Question.with_attached_files.find(params[:question_id]) : answer.question
   end
 
-
   helper_method :answer
   helper_method :question
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
   end
 end
