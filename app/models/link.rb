@@ -10,6 +10,6 @@ class Link < ApplicationRecord
 
   def gist_content
     gist_id = url.split("/")[-1]
-    GistQuestionService.new().call(gist_id)
+    GistService.new().call(gist_id)
   end
 end
