@@ -5,11 +5,6 @@
   p
     = f.label :body, 'Answer'
     = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-  p Links:
-  p
-    = f.fields_for :links do |l|
-    .links= link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+  = render 'attachments/form', f: f
+  = render 'links/form', f: f
   p= f.submit 'Reply'
