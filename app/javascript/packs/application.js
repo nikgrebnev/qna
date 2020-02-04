@@ -17,8 +17,8 @@ require("channels")
 
 require("jquery")
 require("popper.js")
-require("bootstrap");
-require("cocoon");
+require("bootstrap")
+require("cocoon-js")
 
 $(document).on('turbolinks:load',function () {
     $('.question').on('click', '.edit-question-link', function(event) {
