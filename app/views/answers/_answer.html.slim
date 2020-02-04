@@ -8,7 +8,7 @@
     .answer-attaches
       = render 'attachments/show', resource: answer
 
-    .links
+    .answer-links
       = render 'links/show', resource: answer
 
     - if current_user&.author?(answer)

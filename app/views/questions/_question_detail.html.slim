@@ -3,7 +3,7 @@ p= question.body
 .question-attaches
   = render 'attachments/show', resource: question
 
-.links
+.question-links
   = render 'links/show', resource: question
 
 - if current_user&.author?(question)

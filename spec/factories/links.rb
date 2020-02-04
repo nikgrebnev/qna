@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :link do
-    name { "MyString" }
-    url { "MyString" }
+    name { "Search engine" }
+    url { "https://yandex.ru" }
   end
 end
