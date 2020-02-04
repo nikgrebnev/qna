@@ -4,10 +4,7 @@ p= question.body
   = render 'attachments/show', resource: question
 
 .links
-  p Links:
-  ul
-    - question.links.each do |link|
-      li= link_to link.name, link.url
+  = render 'links/show', resource: question
 
 - if current_user&.author?(question)
   = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
