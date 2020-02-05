@@ -5,4 +5,25 @@ RSpec.describe Link, type: :model do
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :url }
+
+
+  describe 'test gist rules' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:link) { create(:link, linkable: question) }
+    let(:link_gist) { create(:link, :gist_url, linkable: question) }
+
+    it 'link is no gist' do
+      expect(link.gist?).to be_falsey
+    end
+
+    it 'gist is gist' do
+      expect(link_gist.gist?).to be_truthy
+    end
+
+    it 'gist_content returns gist' do
+      expect(link_gist.gist_content).to eq "puts 'Hello, world!\""
+    end
+  end
+
 end

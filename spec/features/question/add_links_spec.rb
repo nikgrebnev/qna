@@ -7,8 +7,9 @@ feature 'User can add links to question', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
-  given(:test_links) { {'My gist' => 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c',
+  given(:gist_link) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:test_link) { 'https://ya.ru' }
+  given(:test_links) { {'Github' => 'https://github.com',
                         'Search engine' => 'https://ya.ru' } }
 
   describe 'Add links' do
@@ -23,12 +24,12 @@ feature 'User can add links to question', %q{
     scenario 'User adds link when asks question', js: true do
       click_on 'Add link'
 
-      fill_in 'Link name', with: 'My gist'
-      fill_in 'Url', with: gist_url
+      fill_in 'Link name', with: 'Yandex'
+      fill_in 'Url', with: test_link
 
       click_on 'Ask'
 
-      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'Yandex', href: test_link
     end
 
     scenario 'User adds links when asks question', js: true do
@@ -45,6 +46,18 @@ feature 'User can add links to question', %q{
       test_links.each do |name, link|
         expect(page).to have_link name, href: link
       end
+    end
+
+    scenario 'User adds link with Gist', js: true do
+      click_on 'Add link'
+
+      fill_in 'Link name', with: 'Test gist'
+      fill_in 'Url', with: gist_link
+
+      click_on 'Ask'
+
+      expect(page).to have_link 'Test gist', href: gist_link
+      expect(page).to have_content "puts 'Hello, world!\""
     end
   end
 end
