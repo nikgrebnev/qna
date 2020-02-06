@@ -6,6 +6,13 @@ p= question.body
 .question-links
   = render 'links/show', resource: question
 
+- if question.reward.present? && current_user&.author?(question)
+  .reward-block
+    p
+      | Reward
+      = question.reward.name
+      img src==url_for(question.reward.reward_file)
+
 - if current_user&.author?(question)
   = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
   = link_to 'Delete', question, method: :delete
