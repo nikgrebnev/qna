@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:author) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let(:question) { create(:question, :with_reward, user: user) }
 
 
 
@@ -140,25 +140,29 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #make_best' do
     let!(:answer) { create(:answer, question: question, user: author) }
+    let!(:reward) { create(:reward, question: question, user: author) }
 
     context 'question owner' do
-      before do
-        login(user)
-        patch :make_best, params: { id: answer }, format: :js
-      end
+      before { login(user) }
 
       context 'with valid attributes' do
-
         it 'changes answer attributes' do
+          patch :make_best, params: { id: answer }, format: :js
           answer.reload
           expect(answer).to be_best
         end
 
         it 'renders update view' do
+          patch :make_best, params: { id: answer }, format: :js
           expect(response).to render_template :make_best
+        end
+
+        it 'check user reward' do
+          expect { patch :make_best, params: { id: answer }, format: :js }.to change(answer.user.rewards, :count).by(1)
         end
       end
     end
+
 
     context 'other user, with valid attributes' do
       before do

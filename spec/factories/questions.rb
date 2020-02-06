@@ -15,6 +15,10 @@ FactoryBot.define do
       end
     end
 
+    trait :with_reward do
+      reward { build(:reward) }
+    end
+
     trait :invalid do
       title { nil }
     end
