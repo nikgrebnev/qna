@@ -14,11 +14,11 @@ RSpec.describe Link, type: :model do
     let(:link_gist) { create(:link, :gist_url, linkable: question) }
 
     it 'link is no gist' do
-      expect(link.gist?).to be_falsey
+      expect(link).to_not be_gist
     end
 
     it 'gist is gist' do
-      expect(link_gist.gist?).to be_truthy
+      expect(link_gist).to be_gist
     end
 
     it 'gist_content returns gist' do
