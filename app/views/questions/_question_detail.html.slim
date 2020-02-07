@@ -11,7 +11,7 @@ p= question.body
     p
       | Reward
       = question.reward.name
-      img src==url_for(question.reward.reward_file)
+      img src=url_for(question.reward.reward_file)
 
 - if current_user&.author?(question)
   = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
