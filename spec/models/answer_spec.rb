@@ -41,15 +41,15 @@ RSpec.describe Answer, type: :model do
       best_answer = answers.first
       best_answer.make_best!
       answers.each { |answer| answer.reload }
-      expect(best_answer.best?).to be_truthy
-      expect(answers.last.best?).to be_falsey
+      expect(best_answer).to be_best
+      expect(answers.last).to_not be_best
     end
 
     it 'set another' do
       answers.each { |answer| answer.make_best! }
       answers.each { |answer| answer.reload }
-      expect(answers.first.best?).to be_falsey
-      expect(answers.last.best?).to be_truthy
+      expect(answers.first).to_not be_best
+      expect(answers.last).to be_best
     end
   end
 end
