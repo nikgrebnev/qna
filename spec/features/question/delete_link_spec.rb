@@ -36,4 +36,12 @@ feature 'User can delete links from question', %q{
     end
   end
 
+  scenario 'Guest can not delete link', js: true do
+    visit question_path(question)
+
+    within '.question-links' do
+      expect(page).to have_link 'Search engine', href: 'https://yandex.ru'
+      expect(page).to_not have_link 'Delete'
+    end
+  end
 end
