@@ -17,7 +17,6 @@ RSpec.describe Reward, type: :model do
     it 'check set reward' do
       answer.make_best!
       expect(reward.user).to eq reward_user
-      expect(reward_user.rewards.first).to eq reward
     end
   end
 end
