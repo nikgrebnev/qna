@@ -21,6 +21,13 @@ feature 'rewards rights', %q{
     expect(page).to have_content question.title
     expect(page).to have_content reward.name
     expect(page).to have_css("img[src*='test1.jpg']")
+  end
+
+  scenario 'author of answer can not see rewards of other users', js: true do
+    log_in(answer_author)
+
+    visit rewards_path
+
     expect(page).to_not have_content reward1.name
     expect(page).to_not have_css("img[src*='test2.jpg']")
     expect(page).to_not have_content reward2.name
