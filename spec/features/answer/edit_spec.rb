@@ -11,6 +11,7 @@ feature 'User can edit his answer', %q{
   given!(:author_question) { create(:user) }
   given!(:question) { create(:question, user: author_question) }
   given!(:answer) { create(:answer, question: question, user: author) }
+  given(:test_link) { 'https://ya.ru' }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
@@ -47,6 +48,23 @@ feature 'User can edit his answer', %q{
 
         expect(page).to have_link 'spec_helper.rb'
         expect(page).to have_link 'rails_helper.rb'
+      end
+    end
+
+    scenario 'author edits his answer and add links', js: true do
+      log_in author
+      visit question_path(question)
+
+      within '.answers' do
+        click_on 'Edit'
+
+        click_on 'Add link'
+
+        fill_in 'Link name', with: 'Yandex'
+        fill_in 'Url', with: test_link
+
+        click_on 'Save'
+        expect(page).to have_link 'Yandex', href: test_link
       end
     end
 

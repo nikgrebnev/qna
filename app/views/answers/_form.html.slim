@@ -5,7 +5,6 @@
   p
     = f.label :body, 'Answer'
     = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
+  = render 'attachments/form', f: f
+  = render 'links/form', f: f
   p= f.submit 'Reply'

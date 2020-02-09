@@ -3,6 +3,16 @@ p= question.body
 .question-attaches
   = render 'attachments/show', resource: question
 
+.question-links
+  = render 'links/show', resource: question
+
+- if question.reward.present? && current_user&.author?(question)
+  .reward-block
+    p
+      | Reward
+      = question.reward.name
+      img src=url_for(question.reward.reward_file)
+
 - if current_user&.author?(question)
   = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
   = link_to 'Delete', question, method: :delete
@@ -17,7 +27,6 @@ p= question.body
     p
       = f.label :body, 'Body'
       = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
+    = render 'attachments/form', f: f
+    = render 'links/form', f: f
     p= f.submit 'Save'

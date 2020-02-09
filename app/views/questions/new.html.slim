@@ -7,7 +7,14 @@
   p
     = f.label :body
     = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
+  = render 'attachments/form', f: f
+  = render 'links/form', f: f
+  .reward
+    p Reward
+    p
+      = f.fields_for :reward do |r|
+        = r.label :name, 'Reward name'
+        = r.text_field :name
+        = r.label :reward_file, 'Image'
+        = r.file_field :reward_file
   p= f.submit 'Ask'

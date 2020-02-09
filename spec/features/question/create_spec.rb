@@ -7,6 +7,7 @@ feature 'User can create question', %q{
 } do
 
   given(:user) { create(:user) }
+  given(:not_author) { create(:user) }
 
   describe 'Authenticated user' do
     background do
@@ -41,6 +42,40 @@ feature 'User can create question', %q{
 
       expect(page).to have_link 'spec_helper.rb'
       expect(page).to have_link 'rails_helper.rb'
+    end
+  end
+
+  describe 'Add reward' do
+    background do
+      log_in(user)
+
+      visit questions_path
+      click_on 'Ask question'
+
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'test body'
+
+      within '.reward' do
+        fill_in 'Reward name', with: 'test reward'
+        attach_file 'Image', "#{Rails.root}/app/assets/images/test1.jpg"
+      end
+
+      click_on 'Ask'
+    end
+
+    scenario 'Author ask a question with reward (name and file)' do
+      expect(page).to have_content 'test reward'
+      expect(page).to have_css("img[src*='test1.jpg']")
+    end
+
+    scenario 'Not author can not see reward' do
+      log_out
+      log_in(not_author)
+      visit questions_path
+      click_on 'Show'
+
+      expect(page).to_not have_content 'test reward'
+      expect(page).to_not have_css("img[src*='test1.jpg']")
     end
   end
 
