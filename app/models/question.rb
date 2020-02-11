@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include Linkable
+  include Votable
 
   has_many :answers, dependent: :destroy
   has_one :reward
@@ -10,5 +11,5 @@ class Question < ApplicationRecord
 
   has_many_attached :files
 
-  validates :title, :body, presence: true
+  validates :title, :body, :counter,  presence: true
 end

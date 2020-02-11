@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   it_should_behave_like "links"
+  it_should_behave_like "votes"
   it { should belong_to :question }
   it { should belong_to :user }
 
   it { should validate_presence_of :body }
+  it { should validate_presence_of :counter }
 
   describe 'attaches' do
     let(:user) { create(:user) }

@@ -1,5 +1,12 @@
 h1= question.title
 p= question.body
+
+.question-vote
+  - if !current_user&.author?(question)
+    = 'Vote'
+  p
+    = "Votes: #{question.counter.to_i}"
+
 .question-attaches
   = render 'attachments/show', resource: question
 

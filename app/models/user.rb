@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :rewards
+  has_many :votes
 
   def author?(object)
     id == object.user_id
