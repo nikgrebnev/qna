@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  include Voted
 
   def index
     @questions = Question.all
@@ -7,6 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     answer.links.new
+#    @link_classes = question.create_vote_links(current_user)
   end
 
   def new

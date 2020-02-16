@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  include Voted
 
   def create
     answer.user = current_user
@@ -22,6 +23,10 @@ class AnswersController < ApplicationController
     if current_user.author?(question)
       answer.make_best!
     end
+  end
+
+  def show
+#    @link_classes = answer.create_vote_links(current_user)
   end
 
   private

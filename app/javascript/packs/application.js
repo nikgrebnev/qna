@@ -20,25 +20,7 @@ require("popper.js")
 require("bootstrap")
 require("cocoon-js")
 
-$(document).on('turbolinks:load',function () {
-    $('.question').on('click', '.edit-question-link', function(event) {
-        event.preventDefault();
-        $(this).hide();
-        var questionId = $(this).data('questionId');
-        $('form#edit-question-' + questionId).removeClass('hidden')
-    })
+require("service/questions")
+require("service/answers")
+require("service/votes")
 
-    $('.answers').on('click', '.make-best-answer-link', function(event) {
-        event.preventDefault();
-        $(this).hide();
-        var answerId = $(this).data('answerId');
-        $('form#edit-answer-' + answerId).removeClass('hidden')
-    })
-
-    $('.answers').on('click', '.edit-answer-link', function(event) {
-        event.preventDefault();
-        $(this).hide();
-        var answerId = $(this).data('answerId');
-        $('form#edit-answer-' + answerId).removeClass('hidden')
-    })
-});

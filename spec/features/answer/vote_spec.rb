@@ -1,18 +1,20 @@
 require 'rails_helper'
 
-feature 'vote question', %q{
+feature 'vote answer', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:author) { create(:user) }
-  given(:question) { create(:question, user: author) }
+  given(:question_author) { create(:user) }
+  given(:answer_author) { create(:user) }
+  given(:question) { create(:question, user: question_author) }
+  given!(:answer) { create(:answer, question: question, user: answer_author) }
 
-  scenario 'Authenticated user can vote to question of other user', js: true do
+  scenario 'Authenticated user can vote to answer of other user', js: true do
     log_in(user)
 
     visit question_path(question)
 
-    within '.question-vote' do
+    within '.answer-vote' do
       expect(page).to have_link 'Vote up'
       expect(page).to have_link 'Vote down'
       expect(page).to_not have_link 'Cancel vote'
@@ -35,12 +37,12 @@ feature 'vote question', %q{
     end
   end
 
-  scenario 'Author can not vote to his question', js: true do
-    log_in(author)
+  scenario 'Author can not vote to his answer', js: true do
+    log_in(answer_author)
 
     visit question_path(question)
 
-    within '.question-vote' do
+    within '.answer-vote' do
       expect(page).to_not have_link 'Vote up'
       expect(page).to_not have_link 'Vote down'
       expect(page).to_not have_link 'Cancel vote'
@@ -48,10 +50,10 @@ feature 'vote question', %q{
     end
   end
 
-  scenario 'Guest can not vote to a question', js: true do
+  scenario 'Guest can not vote to a answer', js: true do
     visit question_path(question)
 
-    within '.question-vote' do
+    within '.answer-vote' do
       expect(page).to_not have_link 'Vote up'
       expect(page).to_not have_link 'Vote down'
       expect(page).to_not have_link 'Cancel vote'
