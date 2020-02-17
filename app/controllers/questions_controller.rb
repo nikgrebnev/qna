@@ -7,7 +7,9 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    answer.links.new
+    #answer.links.new
+    @answer = Answer.new
+    @answer.links.new
   end
 
   def new

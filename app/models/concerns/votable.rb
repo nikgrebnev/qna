@@ -16,11 +16,17 @@ module Votable
     end
   end
 
+  def votes_rate
+#    self.votes.map(&:value).sum
+    self.votes.sum(:value)
+  end
+
   def vote_cancel(user)
     transaction do
       self.counter -= current_vote(user)
       self.save
       votes.where(user: user).delete_all
+#      self.votes.reload
     end
   end
 

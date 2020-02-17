@@ -2,7 +2,7 @@ $(document).on('turbolinks:load',function () {
 
     $('.question-vote').on('ajax:success', function(event) {
         var response = event.detail[0];
-        $('.question-vote').find('.counter').html("Votes: " + response.counter);
+        $('.question-vote').find('.counter').html("Votes: " + response.votes_rate);
         if(response.show_cancel_link == 'allow'){
             $('.question-vote').find('.vote-links').addClass('hidden');
             $('.question-vote').find('.votecancel').removeClass('hidden');
@@ -15,7 +15,7 @@ $(document).on('turbolinks:load',function () {
     $('.answers').on('ajax:success', function(event) {
         var response = event.detail[0];
         var answerVote = "div[data-id='" + response.id + "']";
-        $(answerVote).find('.counter').html("Votes: " + response.counter);
+        $(answerVote).find('.counter').html("Votes: " + response.votes_rate);
         if(response.show_cancel_link == 'allow'){
             $(answerVote).find('.vote-links').addClass('hidden');
             $(answerVote).find('.votecancel').removeClass('hidden');

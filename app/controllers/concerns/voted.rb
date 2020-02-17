@@ -39,6 +39,6 @@ module Voted
   end
 
   def send_json(show_cancel_link)
-    render json: { id: @resource.id, counter: @resource.counter, show_cancel_link: show_cancel_link }
+    render json: { id: @resource.id, counter: @resource.counter, votes_rate: @resource.votes_rate, show_cancel_link: show_cancel_link }
   end
 end
