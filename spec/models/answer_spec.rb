@@ -8,6 +8,10 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body }
   it { should validate_presence_of :counter }
 
+#  validates :best, uniqueness: { scope: :question_id }, if: :best?
+#  it { should validate_uniqueness_of(:best).scoped_to(:question_id).conditions(best: true) }
+
+
   it_should_behave_like 'Model Vote' do
     let(:question_author) { create(:user) }
     let(:answer_author) { create(:user) }
