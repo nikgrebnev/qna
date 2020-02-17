@@ -8,16 +8,20 @@ module Votable
 
   def vote(user,value)
     if can_vote?(user)
-      votes.create!(user: user, value: value)
-      self.counter += value
-      self.save
+      transaction do
+        votes.create!(user: user, value: value)
+        self.counter += value
+        self.save
+      end
     end
   end
 
   def vote_cancel(user)
-    self.counter -= current_vote(user)
-    self.save
-    votes.where(user: user).delete_all
+    transaction do
+      self.counter -= current_vote(user)
+      self.save
+      votes.where(user: user).delete_all
+    end
   end
 
   def can_vote?(user)
@@ -31,7 +35,7 @@ module Votable
   private
 
   def voted?(user)
-    !user.votes.find_by(votable: self).nil?
+    user.votes.exists?(votable: self)
   end
 
   def current_vote(user)

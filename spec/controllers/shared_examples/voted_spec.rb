@@ -35,6 +35,17 @@ RSpec.shared_examples "voted" do
         expect(parsed_body["show_cancel_link"]).to eq 'allow'
       end
     end
+
+    context 'guest' do
+      it 'not change resource' do
+        expect { post :voteup, params: { id: resource.id }, format: :js }.to_not change(resource.votes, :count)
+      end
+
+      it 'check return' do
+        post :voteup, params: { id: resource.id }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
+      end
+    end
   end
 
   describe 'POST #votedown' do
@@ -70,6 +81,17 @@ RSpec.shared_examples "voted" do
         expect(parsed_body["id"]).to eq resource.id
         expect(parsed_body["counter"]).to eq -1
         expect(parsed_body["show_cancel_link"]).to eq 'allow'
+      end
+    end
+
+    context 'guest' do
+      it 'not change resource' do
+        expect { post :votedown, params: { id: resource.id }, format: :js }.to_not change(resource.votes, :count)
+      end
+
+      it 'check return' do
+        post :votedown, params: { id: resource.id }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
       end
     end
   end
@@ -136,6 +158,17 @@ RSpec.shared_examples "voted" do
         expect(parsed_body["id"]).to eq resource.id
         expect(parsed_body["counter"]).to eq 0
         expect(parsed_body["show_cancel_link"]).to eq 'disable'
+      end
+    end
+
+    context 'guest' do
+      it 'not change resource' do
+        expect { post :votecancel, params: { id: resource.id }, format: :js }.to_not change(resource.votes, :count)
+      end
+
+      it 'check return' do
+        post :votecancel, params: { id: resource.id }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
       end
     end
   end

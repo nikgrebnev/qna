@@ -25,10 +25,6 @@ class AnswersController < ApplicationController
     end
   end
 
-  def show
-#    @link_classes = answer.create_vote_links(current_user)
-  end
-
   private
 
   def answer

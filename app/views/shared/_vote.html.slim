@@ -1,5 +1,6 @@
 - if current_user && !current_user.author?(resource)
-  = link_to 'Vote up', polymorphic_path(resource, action: :voteup), method: :post, remote: true, data: { type: :json }, class: "voteup #{show_vote_link(resource, current_user)}"
-  = link_to 'Vote down', polymorphic_path(resource, action: :votedown), method: :post, remote: true, data: { type: :json }, class: "votedown #{show_vote_link(resource, current_user)}"
-  = link_to 'Cancel vote', polymorphic_path(resource, action: :votecancel), method: :post, remote: true, data: { type: :json }, class: "votecancel #{show_cancel_vote_link(resource, current_user)}"
+  .vote-links class=vote_links_showing(resource, current_user)
+    = link_to 'Vote up', polymorphic_path(resource, action: :voteup), method: :post, remote: true, data: { type: :json }
+    = link_to 'Vote down', polymorphic_path(resource, action: :votedown), method: :post, remote: true, data: { type: :json }
+  = link_to 'Cancel vote', polymorphic_path(resource, action: :votecancel), method: :post, remote: true, data: { type: :json }, class: "votecancel #{vote_cancel_showing(resource, current_user)}"
 p class='counter' = "Votes: #{resource.counter}"

@@ -8,7 +8,6 @@ class QuestionsController < ApplicationController
 
   def show
     answer.links.new
-#    @link_classes = question.create_vote_links(current_user)
   end
 
   def new
