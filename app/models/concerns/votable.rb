@@ -7,27 +7,15 @@ module Votable
   end
 
   def vote(user,value)
-    if can_vote?(user)
-      transaction do
-        votes.create!(user: user, value: value)
-        self.counter += value
-        self.save
-      end
-    end
+    votes.create!(user: user, value: value) #if can_vote?(user)
   end
 
   def votes_rate
-#    self.votes.map(&:value).sum
     self.votes.sum(:value)
   end
 
   def vote_cancel(user)
-    transaction do
-      self.counter -= current_vote(user)
-      self.save
-      votes.where(user: user).delete_all
-#      self.votes.reload
-    end
+    votes.where(user: user).delete_all
   end
 
   def can_vote?(user)

@@ -21,17 +21,17 @@ RSpec.shared_examples "voted" do
         expect { post :voteup, params: { id: resource.id }, format: :js }.to change(resource.votes, :count).by(1)
       end
 
-      it 'change resource.counter' do
+      it 'change resource.votes_rate' do
         post :voteup, params: { id: resource.id }, format: :js
         resource.reload
-        expect(resource.counter).to eq 1
+        expect(resource.votes_rate).to eq 1
       end
 
       it 'check return' do
         post :voteup, params: { id: resource.id }, format: :js
         parsed_body = JSON(response.body)
         expect(parsed_body["id"]).to eq resource.id
-        expect(parsed_body["counter"]).to eq 1
+        expect(parsed_body["votes_rate"]).to eq 1
         expect(parsed_body["show_cancel_link"]).to eq 'allow'
       end
     end
@@ -69,17 +69,17 @@ RSpec.shared_examples "voted" do
         expect { post :votedown, params: { id: resource.id }, format: :js }.to change(resource.votes, :count).by(1)
       end
 
-      it 'change resource.counter' do
+      it 'change resource.votes_rate' do
         post :votedown, params: { id: resource.id }, format: :js
         resource.reload
-        expect(resource.counter).to eq -1
+        expect(resource.votes_rate).to eq -1
       end
 
       it 'check return' do
         post :votedown, params: { id: resource.id }, format: :js
         parsed_body = JSON(response.body)
         expect(parsed_body["id"]).to eq resource.id
-        expect(parsed_body["counter"]).to eq -1
+        expect(parsed_body["votes_rate"]).to eq -1
         expect(parsed_body["show_cancel_link"]).to eq 'allow'
       end
     end
@@ -137,7 +137,7 @@ RSpec.shared_examples "voted" do
         post :votecancel, params: { id: resource.id }, format: :js
         parsed_body = JSON(response.body)
         expect(parsed_body["id"]).to eq resource.id
-        expect(parsed_body["counter"]).to eq 0
+        expect(parsed_body["votes_rate"]).to eq 0
         expect(parsed_body["show_cancel_link"]).to eq 'disable'
       end
     end
@@ -156,7 +156,7 @@ RSpec.shared_examples "voted" do
         post :votecancel, params: { id: resource.id }, format: :js
         parsed_body = JSON(response.body)
         expect(parsed_body["id"]).to eq resource.id
-        expect(parsed_body["counter"]).to eq 0
+        expect(parsed_body["votes_rate"]).to eq 0
         expect(parsed_body["show_cancel_link"]).to eq 'disable'
       end
     end

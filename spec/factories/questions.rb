@@ -4,7 +4,7 @@ FactoryBot.define do
       "Question title #{n}"
     end
 
-    user { create(:user) }
+    user
 
     sequence :body do |n|
       "Question body #{n} body body"
