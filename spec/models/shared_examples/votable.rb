@@ -67,31 +67,33 @@ RSpec.shared_examples "Model Vote" do
     end
   end
 
-  describe 'test votes_rate function vote +1' do
-    let!(:vote1) { create(:vote, votable: resource, value: 1) }
-    it 'vote +1' do
-      expect(resource.votes_rate).to eq 1
+  describe 'test votes_rate function vote' do
+    context 'one vote +1' do
+      let!(:vote1) { create(:vote, votable: resource, value: 1) }
+      it 'vote +1' do
+        expect(resource.votes_rate).to eq 1
+      end
     end
-  end
 
-  describe 'test votes_rate function vote -1' do
-    let!(:vote1) { create(:vote, votable: resource, value: -1) }
-    it 'vote -1' do
-      expect(resource.votes_rate).to eq -1
+    context 'one vote -1' do
+      let!(:vote1) { create(:vote, votable: resource, value: -1) }
+      it 'vote -1' do
+        expect(resource.votes_rate).to eq -1
+      end
     end
-  end
 
-  describe 'test multiple votes_rate function vote +1' do
-    let!(:votes) { create_list(:vote, 10, votable: resource, value: 1) }
-    it 'votes +10' do
-      expect(resource.votes_rate).to eq 10
+    context 'multiple vote +1' do
+      let!(:votes) { create_list(:vote, 10, votable: resource, value: 1) }
+      it 'votes +10' do
+        expect(resource.votes_rate).to eq 10
+      end
     end
-  end
 
-  describe 'test multiple votes_rate function vote -1' do
-    let!(:votes) { create_list(:vote, 10, votable: resource, value: -1) }
-    it 'votes -10' do
-      expect(resource.votes_rate).to eq -10
+    context 'multiple vote -1' do
+      let!(:votes) { create_list(:vote, 10, votable: resource, value: -1) }
+      it 'votes -10' do
+        expect(resource.votes_rate).to eq -10
+      end
     end
   end
 end
