@@ -30,7 +30,7 @@ RSpec.shared_examples "Model Vote" do
       expect(resource).to be_can_cancel(user1)
     end
 
-    it 'can_vote? from not author and voted -1 resource' do
+    it 'can_cancel? from not author and voted -1 resource' do
       resource.vote!(user1,-1)
       expect(resource).to be_can_cancel(user1)
     end
