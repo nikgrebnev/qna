@@ -26,11 +26,11 @@ RSpec.describe Answer, type: :model do
   describe 'uniqueness best check - 1' do
     let(:user) { create(:user) }
     let(:question) { create(:question) }
-    let!(:answer1) { create(:answer, question: question, user: user, best: true) }
-    let!(:answer2) { create(:answer, question: question, user: user) }
-    it 'check count' do
-      answer2.best = true
-      expect { answer2.save! }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Best has already been taken')
+    let!(:answer) { create(:answer, question: question, user: user, best: true) }
+    it 'check create second best answer' do
+      expect do
+        create(:answer, question: question, user: user, best: true)
+      end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Best has already been taken')
     end
   end
 
