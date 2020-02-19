@@ -3,7 +3,10 @@ FactoryBot.define do
     sequence :body do |n|
       "Answer body #{n} body"
     end
-    question { nil }
+
+    question
+
+    user
 
     trait :with_file do
       after :create do |answer|

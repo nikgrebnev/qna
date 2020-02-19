@@ -5,7 +5,10 @@ RSpec.describe AnswersController, type: :controller do
   let(:author) { create(:user) }
   let(:question) { create(:question, :with_reward, user: user) }
 
-
+  it_behaves_like 'voted' do
+    let(:answer) { create(:answer, question: question, user: author) }
+    let(:resource) { answer }
+  end
 
   describe 'POST #create' do
     let(:answer) { create(:answer, question: question, user: author) }

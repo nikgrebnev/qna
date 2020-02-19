@@ -1,5 +1,4 @@
-- if answer.persisted?
-  div id="answer#{answer.id}"
+  div id="answer#{answer.id}" data = { id: answer.id }
     - if answer.best?
       .best-answer
         b Best Answer
@@ -26,3 +25,6 @@
 
     - if current_user&.author?(question) && !answer.best?
       = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true
+
+    .answer-vote
+      = render 'shared/vote', resource: answer

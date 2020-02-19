@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
   it { should have_many :questions }
   it { should have_many :answers }
   it { should have_many :rewards }
+  it { should have_many :votes }
 
   let(:user) { create(:user) }
   let(:author) { create(:user) }

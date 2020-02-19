@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_160722) do
+ActiveRecord::Schema.define(version: 2020_02_11_120857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2020_02_05_160722) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.boolean "best", default: false
+    t.integer "counter", default: 0, null: false
+    t.index ["counter"], name: "index_answers_on_counter"
     t.index ["question_id", "best"], name: "index_answers_on_question_id_and_best", unique: true, where: "(best = true)"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
@@ -64,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_02_05_160722) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.integer "counter", default: 0, null: false
+    t.index ["counter"], name: "index_questions_on_counter"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -75,11 +79,6 @@ ActiveRecord::Schema.define(version: 2020_02_05_160722) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_rewards_on_question_id"
     t.index ["user_id"], name: "index_rewards_on_user_id"
-  end
-
-  create_table "t", id: false, force: :cascade do |t|
-    t.integer "id"
-    t.boolean "rate"
   end
 
   create_table "users", force: :cascade do |t|
@@ -94,10 +93,23 @@ ActiveRecord::Schema.define(version: 2020_02_05_160722) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer "value", null: false
+    t.bigint "user_id", null: false
+    t.string "votable_type", null: false
+    t.bigint "votable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "votable_id", "votable_type"], name: "index_votes_on_user_id_and_votable_id_and_votable_type", unique: true
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "rewards", "questions"
   add_foreign_key "rewards", "users"
+  add_foreign_key "votes", "users"
 end

@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  include Voted
 
   def create
     answer.user = current_user

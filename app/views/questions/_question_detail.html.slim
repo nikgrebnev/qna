@@ -1,5 +1,9 @@
 h1= question.title
 p= question.body
+
+.question-vote
+  = render 'shared/vote', resource: question
+
 .question-attaches
   = render 'attachments/show', resource: question
 
@@ -30,3 +34,12 @@ p= question.body
     = render 'attachments/form', f: f
     = render 'links/form', f: f
     p= f.submit 'Save'
+
+= tag.div class: 'test div', data: {id: question.id}
+  = question.id
+div id="question#{question.id}"
+  = question.id
+div id="question#{question.id}" data={id: question.id}
+  = question.id
+= tag.div class: 'test div1', data: {id: question.id}, id: "question#{question.id}"
+  = question.id
