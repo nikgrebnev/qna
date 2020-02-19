@@ -27,10 +27,21 @@ RSpec.describe Answer, type: :model do
     let(:user) { create(:user) }
     let(:question) { create(:question) }
     let!(:answer) { create(:answer, question: question, user: user, best: true) }
+
     it 'check create second best answer' do
       expect do
         create(:answer, question: question, user: user, best: true)
       end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Best has already been taken')
+    end
+
+    context 'check create second best answer from another question' do
+      let(:user) { create(:user) }
+      let(:question2) { create(:question) }
+      let!(:answer2) { create(:answer, question: question2, user: user, best: true) }
+
+      it 'check count of best answers' do
+        expect(Answer.where(best: true).count).to eq 2
+      end
     end
   end
 
