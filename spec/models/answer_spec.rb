@@ -34,7 +34,6 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-
   it_should_behave_like 'Model Vote' do
     let(:question_author) { create(:user) }
     let(:answer_author) { create(:user) }
