@@ -6,8 +6,8 @@ module Votable
     accepts_nested_attributes_for :votes, reject_if: :all_blank
   end
 
-  def vote(user,value)
-    votes.create!(user: user, value: value) #if can_vote?(user)
+  def vote!(user,value)
+    votes.create!(user: user, value: value)
   end
 
   def votes_rate
@@ -19,11 +19,11 @@ module Votable
   end
 
   def can_vote?(user)
-    !user.author?(self) && !voted?(user)
+    !voted?(user)
   end
 
   def can_cancel?(user)
-    !user.author?(self) && voted?(user)
+    voted?(user)
   end
 
   private

@@ -5,12 +5,7 @@ RSpec.shared_examples "voted" do
       before { login(author) }
 
       it 'not change resource' do
-        expect { post :voteup, params: { id: resource.id }, format: :js }.to_not change(resource.votes, :count)
-      end
-
-      it 'check return' do
-        post :voteup, params: { id: resource.id }, format: :js
-        expect(response.body).to eq ''
+        expect { post :voteup, params: { id: resource.id }, format: :js }.to raise_error(ActiveRecord::RecordInvalid,'Validation failed: Author can not vote for his resource')
       end
     end
 
@@ -23,7 +18,6 @@ RSpec.shared_examples "voted" do
 
       it 'change resource.votes_rate' do
         post :voteup, params: { id: resource.id }, format: :js
-        resource.reload
         expect(resource.votes_rate).to eq 1
       end
 
@@ -53,12 +47,7 @@ RSpec.shared_examples "voted" do
       before { login(author) }
 
       it 'not change resource' do
-        expect { post :votedown, params: { id: resource.id }, format: :js }.to_not change(resource.votes, :count)
-      end
-
-      it 'check return' do
-        post :votedown, params: { id: resource.id }, format: :js
-        expect(response.body).to eq ''
+        expect { post :votedown, params: { id: resource.id }, format: :js }.to raise_error(ActiveRecord::RecordInvalid,'Validation failed: Author can not vote for his resource')
       end
     end
 
@@ -71,7 +60,6 @@ RSpec.shared_examples "voted" do
 
       it 'change resource.votes_rate' do
         post :votedown, params: { id: resource.id }, format: :js
-        resource.reload
         expect(resource.votes_rate).to eq -1
       end
 

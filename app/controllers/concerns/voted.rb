@@ -9,7 +9,7 @@ module Voted
     return if !user_signed_in?
 
     if @resource.can_vote?(current_user)
-      @resource.vote(current_user, 1)
+      @resource.vote!(current_user, 1)
       send_json('allow')
     end
   end
@@ -18,7 +18,7 @@ module Voted
     return if !user_signed_in?
 
     if @resource.can_vote?(current_user)
-      @resource.vote(current_user, -1)
+      @resource.vote!(current_user, -1)
       send_json('allow')
     end
   end
