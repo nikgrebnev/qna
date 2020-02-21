@@ -340,6 +340,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)
+  sprockets (~> 4.0.0)
   turbolinks (~> 5)
   tzinfo-data
   validate_url
@@ -351,4 +352,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.1.4
+   2.1.2
