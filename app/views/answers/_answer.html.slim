@@ -1,4 +1,4 @@
-  div id="answer#{answer.id}" data = { id: answer.id }
+  div id="answer#{answer.id}" data = { id: answer.id } class = "answer#{answer.id}"
     - if answer.best?
       .best-answer
         b Best Answer
@@ -28,3 +28,8 @@
 
     .answer-vote
       = render 'shared/vote', resource: answer
+
+    .answer-comments
+      = render answer.comments
+      - if user_signed_in?
+        = render 'comments/form', resource: answer

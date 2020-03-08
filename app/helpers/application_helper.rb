@@ -11,4 +11,8 @@ module ApplicationHelper
 
     'hidden'
   end
+
+  def print_time_now_milliseconds
+    Time.now.to_f * 1000
+  end
 end

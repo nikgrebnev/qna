@@ -85,4 +85,41 @@ feature 'User can create question', %q{
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
+
+  context "multiple sessions", :cable, js: true  do
+    scenario "all users see new question in real-time" do
+      Capybara.using_session('author') do
+        log_in(user)
+        visit questions_path
+      end
+
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('not author') do
+        log_in(not_author)
+        visit questions_path
+      end
+
+      Capybara.using_session('author') do
+        click_on 'Ask question'
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'test body'
+        click_on 'Ask'
+
+        expect(page).to have_content 'Successfully added'
+        expect(page).to have_content 'Test question'
+        expect(page).to have_content 'test body'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Test question'
+      end
+
+      Capybara.using_session('not author') do
+        expect(page).to have_content 'Test question'
+      end
+    end
+  end
 end

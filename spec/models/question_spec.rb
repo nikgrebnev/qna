@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Question, type: :model do
   it_should_behave_like "links"
+  it_should_behave_like "comments"
   it { should have_many(:answers).dependent(:destroy) }
   it { should belong_to :user }
   it { should have_one :reward }

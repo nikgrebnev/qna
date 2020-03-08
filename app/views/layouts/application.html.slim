@@ -8,6 +8,8 @@ html
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = action_cable_meta_tag
+    = Gon::Base.render_data
 
   body
     = render 'layouts/nav'
@@ -17,3 +19,6 @@ html
 	  p.alert = alert
 
       = yield
+
+    .test_time
+      = print_time_now_milliseconds

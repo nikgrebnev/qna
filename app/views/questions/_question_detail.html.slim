@@ -17,6 +17,11 @@ p= question.body
       = question.reward.name
       img src=url_for(question.reward.reward_file)
 
+.question-comments
+  = render question.comments
+  - if user_signed_in?
+    = render 'comments/form', resource: question
+
 - if current_user&.author?(question)
   = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
   = link_to 'Delete', question, method: :delete
@@ -34,6 +39,7 @@ p= question.body
     = render 'attachments/form', f: f
     = render 'links/form', f: f
     p= f.submit 'Save'
+
 
 = tag.div class: 'test div', data: {id: question.id}
   = question.id
