@@ -1,15 +1,16 @@
-  div id="answer#{answer.id}" data = { id: answer.id } class = "answer#{answer.id}"
-    - if answer.best?
-      .best-answer
-        b Best Answer
-        = octicon 'heart', class: 'text-danger'
-    p= answer.body
-    .answer-attaches
-      = render 'attachments/show', resource: answer
+div id="answer#{answer.id}" data = { id: answer.id } class = "answer#{answer.id}"
+  - if answer.best?
+    .best-answer
+      b Best Answer
+      = octicon 'heart', class: 'text-danger'
+  p= answer.body
+  .answer-attaches
+    = render 'attachments/show', resource: answer
 
-    .answer-links
-      = render 'links/show', resource: answer
+  .answer-links
+    = render 'links/show', resource: answer
 
+  .answer-edit
     - if current_user&.author?(answer)
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
@@ -23,13 +24,13 @@
         = render 'links/form', f: f
         p= f.submit 'Save'
 
-    - if current_user&.author?(question) && !answer.best?
-      = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true
+  - if current_user&.author?(question) && !answer.best?
+    = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true
 
-    .answer-vote
-      = render 'shared/vote', resource: answer
+  .answer-vote
+    = render 'shared/vote', resource: answer
 
-    .answer-comments
-      = render answer.comments
-      - if user_signed_in?
-        = render 'comments/form', resource: answer
+  .answer-comments
+    = render answer.comments
+    - if user_signed_in?
+      = render 'comments/form', resource: answer

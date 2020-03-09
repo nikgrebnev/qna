@@ -22,23 +22,24 @@ p= question.body
   - if user_signed_in?
     = render 'comments/form', resource: question
 
-- if current_user&.author?(question)
-  = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
-  = link_to 'Delete', question, method: :delete
+.question-edit
+  - if current_user&.author?(question)
+    = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+    = link_to 'Delete', question, method: :delete
 
-  .question-errors
-    = render 'shared/errors', resource: question
+    .question-errors
+      = render 'shared/errors', resource: question
 
-  = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
-    p
-      = f.label :title, 'Title'
-      = f.text_area :title
-    p
-      = f.label :body, 'Body'
-      = f.text_area :body
-    = render 'attachments/form', f: f
-    = render 'links/form', f: f
-    p= f.submit 'Save'
+    = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
+      p
+        = f.label :title, 'Title'
+        = f.text_area :title
+      p
+        = f.label :body, 'Body'
+        = f.text_area :body
+      = render 'attachments/form', f: f
+      = render 'links/form', f: f
+      p= f.submit 'Save'
 
 
 = tag.div class: 'test div', data: {id: question.id}

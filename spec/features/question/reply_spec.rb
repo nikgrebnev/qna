@@ -64,7 +64,6 @@ feature 'reply question', %q{
       end
 
       Capybara.using_session('author') do
-#        save_and_open_page
         fill_in 'Answer', with: 'Test answer'
         click_on 'Reply'
 
