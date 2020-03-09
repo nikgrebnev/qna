@@ -48,7 +48,6 @@ $(document).on('turbolinks:load', function () {
           var comment = renderComment(data['comment']);
           resource.append(comment);
         };
-
       }
     },
   });
