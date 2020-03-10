@@ -42,6 +42,7 @@ feature 'add comment to answer', %q{
 
   context "multiple sessions", :cable, js: true  do
     given(:not_author) { create(:user) }
+    given!(:question1) { create(:question, user: author_question) }
 
     scenario "all users see new comment to answer in real-time" do
       Capybara.using_session('author') do
@@ -56,6 +57,20 @@ feature 'add comment to answer', %q{
       Capybara.using_session('not author') do
         log_in(not_author)
         visit question_path(question)
+      end
+
+      Capybara.using_session('author question1') do
+        log_in(user)
+        visit question_path(question1)
+      end
+
+      Capybara.using_session('guest question1') do
+        visit question_path(question1)
+      end
+
+      Capybara.using_session('not author question1') do
+        log_in(not_author)
+        visit question_path(question1)
       end
 
       Capybara.using_session('author') do
@@ -78,6 +93,18 @@ feature 'add comment to answer', %q{
         within '.answer-comments' do
           expect(page).to have_content 'Test comment'
         end
+      end
+
+      Capybara.using_session('author question1') do
+        expect(page).to_not have_content 'Test comment'
+      end
+
+      Capybara.using_session('guest question1') do
+        expect(page).to_not have_content 'Test comment'
+      end
+
+      Capybara.using_session('not author question1') do
+        expect(page).to_not have_content 'Test comment'
       end
     end
   end

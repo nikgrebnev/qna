@@ -13,13 +13,8 @@ $(document).on('turbolinks:load', function () {
       }
     },
 
-    disconnected() {
-    },
-
     received(data) {
-      console.log('Question channel receive ', data)
-      if (data['event'] == 'new_answer' && data['question_author_id'] != gon.user_id) {
-        console.log('new_answer', data);
+      if (data['event'] === 'new_answer' && data['question_author_id'] != gon.user_id) {
         var answers = $('.answers');
         if (answers) {
           var answer = renderAnswer(data['answer'], data['question_author_id']);
@@ -31,19 +26,16 @@ $(document).on('turbolinks:load', function () {
           answers.append(div);
         }
       }
-      if (data['event'] == 'new_comment'){
-        console.log('new_comment', data);
+      if (data['event'] === 'new_comment'){
         var resource_type = data['resource_type'];
-        console.log('resource_type', resource_type);
 
-        if (resource_type == 'question') {
+        if (resource_type === 'question') {
           var resource = $('.question-comments');
         }
-        else if (resource_type == 'answer') {
+        else if (resource_type === 'answer') {
           var resource = $('.answers div[data-id=' + data['resource_id'] + '] .answer-comments');
         };
 
-        console.log(resource)
         if ((resource) && (data['comment']['user_id'] != gon.user_id)) {
           var comment = renderComment(data['comment']);
           resource.append(comment);

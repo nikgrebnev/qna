@@ -10,7 +10,6 @@
     $('.question-comments #comment_body').val('');
 <% else %>
     $('.answer<%= resource_id %> .answer-comments').append('<%= j render @comment %>');
-//    $(".answers div[data-id='<%= resource_id %>'] .answer-comments").append('<%= j render @comment %>');
     $('.answer<%= resource_id %> #comment_body').val('');
   <% end %>
 <% end %>

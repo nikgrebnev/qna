@@ -53,7 +53,9 @@ class QuestionsController < ApplicationController
 
     ActionCable.server.broadcast(
         'questions',
-        { event: 'new_question', data: render_question }
+        { event: 'new_question',
+          data: ApplicationController.render( partial: 'questions/question', locals: { question: question} )
+        }
     )
   end
 
@@ -69,9 +71,5 @@ class QuestionsController < ApplicationController
   
   def question_params
     params.require(:question).permit(:title, :body, files: [], links_attributes: [:name, :url], reward_attributes: [:name, :reward_file])
-  end
-
-  def render_question
-    ApplicationController.render( partial: 'questions/question', locals: { question: question} )
   end
 end
