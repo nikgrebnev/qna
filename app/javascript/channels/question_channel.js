@@ -5,12 +5,7 @@ $(document).on('turbolinks:load', function () {
     consumer.subscriptions.remove(this.subscription);
   }
 
-  var question_id = 0;
-  var route = window.location.href.split('/').slice(-2);
-  if ((route[0] = 'questions') && (route[1].match(/\d/)))
-  {
-    question_id = route[1];
-  }
+  var question_id = $('.question').data('id');
 
   if (question_id > 0) {
     var subscription = consumer.subscriptions.create( {channel: 'QuestionChannel', room: question_id }, {
