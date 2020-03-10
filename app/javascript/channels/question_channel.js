@@ -5,8 +5,8 @@ $(document).on('turbolinks:load', function () {
     consumer.subscriptions.remove(this.subscription);
   }
 
-  var route = window.location.href.split('/').slice(-2);
   var question_id = 0;
+  var route = window.location.href.split('/').slice(-2);
   if ((route[0] = 'questions') && (route[1].match(/\d/)))
   {
     question_id = route[1];
@@ -14,7 +14,7 @@ $(document).on('turbolinks:load', function () {
 
   if (question_id > 0) {
     var subscription = consumer.subscriptions.create( {channel: 'QuestionChannel', room: question_id }, {
-      
+
       received(data) {
         if (data['event'] === 'new_answer' && data['question_author_id'] != gon.user_id) {
           var answers = $('.answers');
