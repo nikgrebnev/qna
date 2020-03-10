@@ -5,14 +5,7 @@ $(document).on('turbolinks:load', function () {
     consumer.subscriptions.remove(this.subscription);
   }
 
-  var subscription = consumer.subscriptions.create('QuestionChannel', {
-    connected() {
-      var route = window.location.href.split('/').slice(-2);
-      if ((route[0] = 'questions') && (route[1].match(/\d/))) {
-        this.perform('follow', {id: route[1]});
-      }
-    },
-
+  var subscription = consumer.subscriptions.create( {channel: 'QuestionChannel', room: gon.question_id }, {
     received(data) {
       if (data['event'] === 'new_answer' && data['question_author_id'] != gon.user_id) {
         var answers = $('.answers');

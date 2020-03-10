@@ -1,8 +1,6 @@
 class QuestionChannel < ApplicationCable::Channel
   def subscribed
-  end
+    stream_from "question_#{params[:room].to_i}"
 
-  def follow(data)
-    stream_from "question_#{data['id']}"
   end
 end

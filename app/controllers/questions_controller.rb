@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.links.new
+    gon.question_id = question.id
   end
 
   def new
