@@ -1,13 +1,12 @@
 import consumer from "./consumer"
 
 $(document).on('turbolinks:load', function () {
-  if(this.subscription){
-    consumer.subscriptions.remove(this.subscription);
-  }
-
   var question_id = $('.question').data('id');
 
   if (question_id > 0) {
+    if(this.subscription){
+      consumer.subscriptions.remove(this.subscription);
+    }
     var subscription = consumer.subscriptions.create( {channel: 'QuestionChannel', room: question_id }, {
 
       received(data) {
