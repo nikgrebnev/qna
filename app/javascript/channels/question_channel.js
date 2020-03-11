@@ -1,5 +1,7 @@
 import consumer from "./consumer"
 
+var subscription;
+
 $(document).on('turbolinks:load', function () {
   var question_id = $('.question').data('id');
 
@@ -7,7 +9,7 @@ $(document).on('turbolinks:load', function () {
     if(this.subscription){
       consumer.subscriptions.remove(this.subscription);
     }
-    var subscription = consumer.subscriptions.create( {channel: 'QuestionChannel', room: question_id }, {
+    subscription = consumer.subscriptions.create( {channel: 'QuestionChannel', room: question_id }, {
 
       received(data) {
         if (data['event'] === 'new_answer' && data['question_author_id'] != gon.user_id) {
