@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   it_should_behave_like "links"
+  it_should_behave_like "comments"
   it { should belong_to :question }
   it { should belong_to :user }
 

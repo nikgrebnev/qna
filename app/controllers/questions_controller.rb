@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   include Voted
+  after_action :publish_question, only: [:create]
 
   def index
     @questions = Question.all
@@ -46,6 +47,17 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    return if question.errors.any?
+
+    ActionCable.server.broadcast(
+        'questions',
+        { event: 'new_question',
+          data: ApplicationController.render( partial: 'questions/question', locals: { question: question} )
+        }
+    )
+  end
 
   def question
     @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : current_user.questions.new(question_params)

@@ -1,0 +1,15 @@
+<% resource_type = @comment.commentable_type.underscore %>
+<% resource_id = @comment.commentable_id %>
+
+<% if @comment&.errors.present? %>
+  errors = $('form#new-comment-<%= resource_type %>-<%= resource_id %>').find('.errors');
+  errors.html('<%= j render partial: 'shared/errors', locals: { resource: @comment } %>');
+<% else %>
+  <% if resource_type == 'question'%>
+    $('.question-comments').append('<%= j render @comment %>');
+    $('.question-comments #comment_body').val('');
+<% else %>
+    $('.answer<%= resource_id %> .answer-comments').append('<%= j render @comment %>');
+    $('.answer<%= resource_id %> #comment_body').val('');
+  <% end %>
+<% end %>

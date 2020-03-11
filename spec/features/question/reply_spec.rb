@@ -44,6 +44,75 @@ feature 'reply question', %q{
     visit question_path(question)
     expect(page).to_not have_button, 'Reply'
   end
+
+  context "multiple sessions", :cable, js: true  do
+    given(:not_author) { create(:user) }
+    given(:question1) { create(:question, user: author) }
+
+    scenario "all users see new answer in real-time" do
+      Capybara.using_session('author') do
+        log_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('not author') do
+        log_in(not_author)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('author question1') do
+        log_in(user)
+        visit question_path(question1)
+      end
+
+      Capybara.using_session('guest question1') do
+        visit question_path(question1)
+      end
+
+      Capybara.using_session('not author question1') do
+        log_in(not_author)
+        visit question_path(question1)
+      end
+
+      Capybara.using_session('author') do
+        fill_in 'Answer', with: 'Test answer'
+        click_on 'Reply'
+
+        expect(current_path).to eq question_path(question)
+        within '.answers' do
+          expect(page).to have_content 'Test answer'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'Test answer'
+        end
+      end
+
+      Capybara.using_session('not author') do
+        within '.answers' do
+          expect(page).to have_content 'Test answer'
+        end
+      end
+
+      Capybara.using_session('author question1') do
+        expect(page).to_not have_content 'Test answer'
+      end
+
+      Capybara.using_session('guest question1') do
+        expect(page).to_not have_content 'Test answer'
+      end
+
+      Capybara.using_session('not author question1') do
+        expect(page).to_not have_content 'Test answer'
+      end
+    end
+  end
 end
 
 
