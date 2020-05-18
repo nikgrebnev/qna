@@ -1,22 +1,18 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
 
   def github
-    #render json: request.env['omniauth.auth']
     generic_callback('GitHub')
   end
 
   def vkontakte
-    #render json: request.env['omniauth.auth']
     generic_callback('Vkontakte')
   end
 
   def google_oauth2
-    #render json: request.env['omniauth.auth']
     generic_callback('Google')
   end
 
   def facebook
-    #render json: request.env['omniauth.auth']
     generic_callback('Facebook')
   end
 
