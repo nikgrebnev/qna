@@ -9,6 +9,8 @@ RSpec.describe Ability do
     it {should be_able_to :read, Question}
     it {should be_able_to :read, Answer}
     it {should be_able_to :read, Comment}
+    it {should be_able_to :read, ActiveStorage::Attachment}
+    it {should be_able_to :read, Link}
 
     it {should_not be_able_to :manage, :all}
   end
