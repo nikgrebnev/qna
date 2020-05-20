@@ -84,7 +84,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to question' do
         delete :destroy, params: { id: answer, format: :js }
-        expect(response).to render_template :destroy
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

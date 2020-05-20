@@ -10,15 +10,13 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(answer)
-      answer.destroy
-    end
+    #я не пониманию, почему без этого не работает. Т.к. вначале файла уже стоит authorize_resource
+    authorize! :destroy, answer
+    answer.destroy
   end
 
   def update
-    if current_user.author?(answer)
-      answer.update(answer_params)
-    end
+    answer.update(answer_params)
   end
 
   def make_best

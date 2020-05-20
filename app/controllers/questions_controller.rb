@@ -32,19 +32,14 @@ class QuestionsController < ApplicationController
   end
 
   def update
-#    if current_user.author?(question)
-      question.update(question_params)
-#    end
+    question.update(question_params)
   end
 
   def destroy
+    #я не пониманию, почему без этого не работает. Т.к. вначале файла уже стоит authorize_resource
     authorize! :destroy, question
-#    if current_user&.author?(question)
-      question.destroy
-      flash[:notice] = 'Deleted successfully'
-#    else
-#      flash[:alert] = "You can not delete"
-#    end
+    question.destroy
+    flash[:notice] = 'Deleted successfully'
     redirect_to questions_path
   end
 
