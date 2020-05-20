@@ -6,8 +6,7 @@ module Voted
   end
 
   def voteup
-    return if !user_signed_in?
-
+    authorize! :vote, @resource
     if @resource.can_vote?(current_user)
       @resource.vote!(current_user, 1)
       send_json('allow')
@@ -15,8 +14,7 @@ module Voted
   end
 
   def votedown
-    return if !user_signed_in?
-
+    authorize! :vote, @resource
     if @resource.can_vote?(current_user)
       @resource.vote!(current_user, -1)
       send_json('allow')
@@ -24,8 +22,7 @@ module Voted
   end
 
   def votecancel
-    return if !user_signed_in?
-
+    authorize! :vote, @resource
     if @resource.can_cancel?(current_user)
       @resource.vote_cancel(current_user)
       send_json('disable')

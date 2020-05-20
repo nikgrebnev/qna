@@ -1,7 +1,9 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  authorize_resource
   before_action :find_resource, only: :create
   after_action :publish_comment, only: :create
+
 
   def create
     comment.user = current_user

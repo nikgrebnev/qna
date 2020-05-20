@@ -30,7 +30,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'redirect to question' do
         delete :destroy, params: { id: question.files.first, format: :js }
-        expect(response).to redirect_to question
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'redirect to question' do
         delete :destroy, params: { id: answer.files.first, format: :js }
-        expect(response).to redirect_to answer.question
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

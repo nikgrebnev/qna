@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  authorize_resource
   include Voted
   after_action :publish_question, only: [:create]
 
@@ -31,18 +32,19 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(question)
+#    if current_user.author?(question)
       question.update(question_params)
-    end
+#    end
   end
 
   def destroy
-    if current_user&.author?(question)
+    authorize! :destroy, question
+#    if current_user&.author?(question)
       question.destroy
       flash[:notice] = 'Deleted successfully'
-    else
-      flash[:alert] = "You can not delete"
-    end
+#    else
+#      flash[:alert] = "You can not delete"
+#    end
     redirect_to questions_path
   end
 

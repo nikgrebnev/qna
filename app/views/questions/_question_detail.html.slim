@@ -21,11 +21,11 @@
 
   .question-comments
     = render question.comments
-    - if user_signed_in?
+    - if can? :create, Comment
       = render 'comments/form', resource: question
 
   .question-edit
-    - if current_user&.author?(question)
+    - if can? :modify, question
       = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
       = link_to 'Delete', question, method: :delete
 

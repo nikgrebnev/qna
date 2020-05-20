@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:author) { create(:user) }
+  let(:answer_author) { create(:user) }
   let(:question) { create(:question, :with_reward, user: user) }
 
   it_behaves_like 'voted' do
@@ -142,8 +143,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #make_best' do
-    let!(:answer) { create(:answer, question: question, user: author) }
-    let!(:reward) { create(:reward, question: question, user: author) }
+    let!(:answer) { create(:answer, question: question, user: answer_author) }
+    let!(:reward) { create(:reward, question: question, user: user) }
 
     context 'question owner' do
       before { login(user) }
@@ -169,7 +170,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'other user, with valid attributes' do
       before do
-        login(author)
+        login(answer_author)
         patch :make_best, params: { id: answer }, format: :js
       end
 
@@ -179,7 +180,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'check render' do
-        expect(response).to render_template :make_best
+        expect(response.body).to eq ''
       end
     end
   end

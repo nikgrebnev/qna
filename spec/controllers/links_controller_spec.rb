@@ -32,7 +32,7 @@ RSpec.describe LinksController, type: :controller do
 
       it 'redirect to question' do
         delete :destroy, params: { id: question.links.first, format: :js }
-        expect(response).to redirect_to question
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
@@ -58,7 +58,7 @@ RSpec.describe LinksController, type: :controller do
 
       it 'redirect to question' do
         delete :destroy, params: { id: answer.links.first, format: :js }
-        expect(response).to redirect_to answer.question
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

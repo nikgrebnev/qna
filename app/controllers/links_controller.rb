@@ -5,12 +5,10 @@ class LinksController < ApplicationController
     link = Link.find(params[:id])
     resource = link.linkable
 
-    if current_user.author?(resource)
-      link.destroy
-      message = { notice: 'Your link successfully deleted' }
-    else
-      message = { alert: 'You can not delete' }
-    end
+    authorize! :destroy, link
+
+    link.destroy
+    message = { notice: 'Your link successfully deleted' }
 
     if resource.is_a?(Question)
       redirect_to resource, message

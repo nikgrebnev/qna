@@ -5,7 +5,8 @@ RSpec.shared_examples "voted" do
       before { login(author) }
 
       it 'not change resource' do
-        expect { post :voteup, params: { id: resource.id }, format: :js }.to raise_error(ActiveRecord::RecordInvalid,'Validation failed: Author can not vote for his resource')
+        post :voteup, params: { id: resource.id }, format: :js
+        expect(response.body).to eq ''
       end
     end
 
@@ -47,7 +48,8 @@ RSpec.shared_examples "voted" do
       before { login(author) }
 
       it 'not change resource' do
-        expect { post :votedown, params: { id: resource.id }, format: :js }.to raise_error(ActiveRecord::RecordInvalid,'Validation failed: Author can not vote for his resource')
+        post :votedown, params: { id: resource.id }, format: :js
+        expect(response.body).to eq ''
       end
     end
 
