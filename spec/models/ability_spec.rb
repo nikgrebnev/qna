@@ -89,5 +89,13 @@ RSpec.describe Ability do
       it { should be_able_to :destroy, attachment_user }
       it { should_not be_able_to :destroy, attachment_other }
     end
+
+    context 'Links' do
+      let(:link_user) { create(:link, linkable: question_user) }
+      let(:link_other) { create(:link, linkable: question_other) }
+
+      it { should be_able_to :destroy, link_user }
+      it { should_not be_able_to :destroy, link_other }
+    end
   end
 end
