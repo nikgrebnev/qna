@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :question, only: %i[destroy update]
   authorize_resource
   include Voted
   after_action :publish_question, only: [:create]
@@ -36,8 +37,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    #я не пониманию, почему без этого не работает. Т.к. вначале файла уже стоит authorize_resource
-    authorize! :destroy, question
     question.destroy
     flash[:notice] = 'Deleted successfully'
     redirect_to questions_path

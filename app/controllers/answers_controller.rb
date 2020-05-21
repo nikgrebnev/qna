@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :answer, only: %i[destroy update]
   authorize_resource
   include Voted
   after_action :publish_answer, only: [:create]
@@ -10,8 +11,6 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    #я не пониманию, почему без этого не работает. Т.к. вначале файла уже стоит authorize_resource
-    authorize! :destroy, answer
     answer.destroy
   end
 
