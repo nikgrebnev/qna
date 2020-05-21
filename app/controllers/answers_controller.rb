@@ -1,5 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :answer, only: %i[destroy update]
+  authorize_resource
   include Voted
   after_action :publish_answer, only: [:create]
 
@@ -9,21 +11,16 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(answer)
-      answer.destroy
-    end
+    answer.destroy
   end
 
   def update
-    if current_user.author?(answer)
-      answer.update(answer_params)
-    end
+    answer.update(answer_params)
   end
 
   def make_best
-    if current_user.author?(question)
-      answer.make_best!
-    end
+    authorize! :make_best, answer
+    answer.make_best!
   end
 
   private

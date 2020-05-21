@@ -11,7 +11,7 @@ div id="answer#{answer.id}" data = { id: answer.id } class = "answer#{answer.id}
     = render 'links/show', resource: answer
 
   .answer-edit
-    - if current_user&.author?(answer)
+    - if can? :modify, answer
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
       = link_to 'Delete', answer, method: :delete, remote: true
@@ -24,7 +24,7 @@ div id="answer#{answer.id}" data = { id: answer.id } class = "answer#{answer.id}
         = render 'links/form', f: f
         p= f.submit 'Save'
 
-  - if current_user&.author?(question) && !answer.best?
+  - if can?(:modify, question) && !answer.best?
     = link_to 'Make best answer', make_best_answer_path(answer), method: :patch, remote: true
 
   .answer-vote
@@ -32,5 +32,5 @@ div id="answer#{answer.id}" data = { id: answer.id } class = "answer#{answer.id}
 
   .answer-comments
     = render answer.comments
-    - if user_signed_in?
+    - if can? :create, Comment
       = render 'comments/form', resource: answer

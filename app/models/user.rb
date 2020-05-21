@@ -23,4 +23,8 @@ class User < ApplicationRecord
   def create_authorization(auth)
     authorizations.create(provider: auth['provider'], uid: auth['uid'])
   end
+
+  def admin?
+    is_a?(Admin)
+  end
 end

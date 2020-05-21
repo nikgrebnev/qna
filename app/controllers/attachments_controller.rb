@@ -5,12 +5,10 @@ class AttachmentsController < ApplicationController
     attachment = ActiveStorage::Attachment.find(params[:id])
     resource = attachment.record
 
-    if current_user.author?(resource)
-      attachment.purge
-      message = { notice: 'Your file successfully deleted' }
-    else
-      message = { alert: 'You can not delete' }
-    end
+    authorize! :destroy, attachment
+
+    attachment.purge
+    message = { notice: 'Your file successfully deleted' }
 
     if resource.is_a?(Question)
       redirect_to resource, message
