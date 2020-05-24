@@ -21,6 +21,7 @@ class Ability
 
   def user_rights
     guest_rights
+    can :me, User#, user: user
     can :create, [Question, Answer, Comment]
     can :modify, [Question, Answer, Comment], user_id: user.id
 
