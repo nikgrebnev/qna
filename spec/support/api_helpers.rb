@@ -4,4 +4,8 @@ module ApiHelpers
     # pp @json
     # @json
   end
+
+  def do_request(method, path, options = {})
+    send method, path, options
+  end
 end
