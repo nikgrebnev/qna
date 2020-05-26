@@ -56,7 +56,6 @@ describe 'Questions API', type: :request do
           end
         end
       end
-
     end
   end
 
@@ -143,14 +142,44 @@ describe 'Questions API', type: :request do
           end
         end
       end
+    end
+  end
+
+  describe 'GET /api/v1/questions/:id/answers' do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let!(:answers) { create_list(:answer, 6, question: question) }
+
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :get }
+    end
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      describe 'answers list' do
+        let(:answer) { answers.first }
+        let(:answer_response) { json['answers'].first }
+
+        it 'return 200 status' do
+          expect(response).to be_successful
+        end
+
+        it 'returns list of answers' do
+          expect(json['answers'].size).to eq 6
+        end
+
+        it 'returns all public fields' do
+          %w[id body user_id created_at updated_at].each do |attr|
+            expect(answer_response[attr]).to eq answer.send(attr).as_json
+          end
+        end
+      end
 
     end
 
-
-
   end
-
-#  describe 'answers list of question * Списка ответов для вопроса
-#GET /api/v1/questions/:id/answers' do
-
 end
