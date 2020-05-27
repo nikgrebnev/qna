@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) { { "CONTENT_TYPE" => 'application/json',
-                    "ACCEPT" => 'application/json' } }
+  let(:headers) { { 'ACCEPT' => 'application/json' } }
 
   describe 'GET /api/v1/questions/:question_id/answers/:id' do
     let(:method) { :get }

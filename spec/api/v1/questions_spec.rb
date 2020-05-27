@@ -1,15 +1,13 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers) { { "CONTENT_TYPE" => 'application/json',
-                    "ACCEPT" => 'application/json' } }
+  let(:headers) { { "ACCEPT" => 'application/json' } }
 
   describe 'GET /api/v1/questions' do
     let(:method) { :get }
     let(:api_path) { '/api/v1/questions' }
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :get }
-    end
+
+    it_behaves_like 'API Authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -178,8 +176,51 @@ describe 'Questions API', type: :request do
           end
         end
       end
+    end
+  end
 
+#  describe 'PATCH /api/v1/questions/:id, update question' do
+  describe 'POST /api/v1/questions, create new question' do
+    let(:question) { create(:question) }
+    let(:api_path) { "/api/v1/questions" }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :post }
     end
 
+    context 'authorized' do
+      let(:user) { create(:user) }
+      let(:access_token) { create(:access_token) }
+      let(:question_params) { { title: 'Title test', body: 'Body test'} }
+      let(:question_request) {
+         post api_path, params: {
+              access_token: access_token.token,
+              question: question_params
+            },
+            headers: headers
+      }
+      let(:question_response) { json['question'] }
+
+      it_behaves_like 'Status OK' do
+          let(:request) { question_request }
+        end
+
+      it 'saves question in database' do
+          expect { question_request }.to change(Question, :count).by(1)
+      end
+
+      it_behaves_like 'Check public fields' do
+        let(:request) { question_request }
+        let(:fields) { %w[title body created_at updated_at] }
+        let(:reference) { Question.first }
+        let(:resource_response) { question_response }
+      end
+
+      it 'check user' do
+        question_request
+        expect(question_response['user']['id']).to eq assigns(:question).send('user_id').as_json
+      end
+
+    end
   end
 end

@@ -1,7 +1,6 @@
 class Api::V1::BaseController < ApplicationController
-  before_action :doorkeeper_authorize!
-  #before_action -> {doorkeeper_authorize! :read}, only: [:index, :show, :me]
-  #before_action -> {doorkeeper_authorize! :write}, only: [:create, :update, :destroy]
+  before_action -> {doorkeeper_authorize! :read}, only: [:index, :show, :me]
+  before_action -> {doorkeeper_authorize! :write}, only: [:create, :update, :destroy]
 
   protected
 
@@ -12,6 +11,4 @@ class Api::V1::BaseController < ApplicationController
   def current_ability
     @ability ||= Ability.new(current_resource_owner)
   end
-
-  # alias current_user current_resource_owner
 end
