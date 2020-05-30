@@ -16,17 +16,17 @@ describe 'Answers API', type: :request do
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
-      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+      let(:answer_request) { get api_path, params: { access_token: access_token.token }, headers: headers }
       let(:answer_response) { json['answer'] }
 
-      it 'return 200 status' do
-        expect(response).to be_successful
-      end
+      before { answer_request }
 
-      it 'returns all public fields best' do
-        %w[id body created_at updated_at user_id].each do |attr|
-          expect(answer_response[attr]).to eq answer.send(attr).as_json
-        end
+      it_behaves_like 'Status OK'
+
+      it_behaves_like 'Check public fields' do
+        let(:fields) { %w[id body best user_id created_at updated_at] }
+        let(:reference) { answer }
+        let(:resource_response) { answer_response }
       end
 
       describe 'comments' do
@@ -37,10 +37,10 @@ describe 'Answers API', type: :request do
           expect(answer_response['comments'].size).to eq 3
         end
 
-        it 'returns all public fields' do
-          %w[id body user_id created_at updated_at].each do |attr|
-            expect(comment_response[attr]).to eq comment.send(attr).as_json
-          end
+        it_behaves_like 'Check public fields' do
+          let(:fields) { %w[id body user_id created_at updated_at] }
+          let(:reference) { comment }
+          let(:resource_response) { comment_response }
         end
       end
 
