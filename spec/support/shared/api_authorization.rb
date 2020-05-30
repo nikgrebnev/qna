@@ -29,3 +29,12 @@ shared_examples_for 'Check public fields' do
     end
   end
 end
+
+shared_examples_for 'Check not public fields' do
+  it 'check excluded fields list' do
+    request
+    fields.each do |attr|
+      expect(resource_response).to_not have_key(attr)
+    end
+  end
+end
