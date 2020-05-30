@@ -65,14 +65,12 @@ describe 'Answers API', type: :request do
           expect(answer_response['links'].size).to eq 3
         end
 
-        it 'returns all public fields' do
-          %w[id name url created_at updated_at].each do |attr|
-            expect(link_response[attr]).to eq link.send(attr).as_json
-          end
+        it_behaves_like 'Check public fields' do
+          let(:fields) { %w[id name url created_at updated_at] }
+          let(:reference) { link }
+          let(:resource_response) { link_response }
         end
       end
-
-
     end
   end
 
