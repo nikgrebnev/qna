@@ -145,6 +145,11 @@ ActiveRecord::Schema.define(version: 2020_05_21_130406) do
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
+  create_table "t", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.boolean "rate"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

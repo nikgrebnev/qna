@@ -179,9 +179,7 @@ describe 'Questions API', type: :request do
     end
   end
 
-#  describe 'PATCH /api/v1/questions/:id, update question' do
   describe 'POST /api/v1/questions, create new question' do
-    let(:question) { create(:question) }
     let(:api_path) { "/api/v1/questions" }
 
     it_behaves_like 'API Authorizable' do
@@ -221,6 +219,71 @@ describe 'Questions API', type: :request do
         expect(question_response['user']['id']).to eq assigns(:question).send('user_id').as_json
       end
 
+    end
+  end
+
+  describe 'PATCH /api/v1/questions/:id, update question' do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:method) { :patch }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+      let(:question_params) { { title: 'New Title test', body: 'New Body test'} }
+      let(:question_request) {
+        patch api_path, params: {
+            access_token: access_token.token,
+            question: question_params
+        },
+             headers: headers
+      }
+      let(:question_response) { json['question'] }
+
+      it_behaves_like 'Status OK' do
+        let(:request) { question_request }
+      end
+
+      it 'not changed count questions in database' do
+        expect { question_request }.to change(Question, :count).by(0)
+      end
+
+      it_behaves_like 'Check public fields' do
+        let(:request) { question_request }
+        let(:fields) { %w[id title body created_at updated_at] }
+        let(:reference) { Question.first }
+        let(:resource_response) { question_response }
+      end
+
+      it 'saves question in database with new params' do
+        question_request
+        expect(Question.last.body).to eq question_params[:body]
+        expect(Question.last.title).to eq question_params[:title]
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/questions/:id, delete question' do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:method) { :delete }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+      let(:question_request) { delete api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'Status OK' do
+        let(:request) { question_request }
+      end
+
+      it 'changed count questions in database' do
+        expect { question_request }.to change(Question, :count).by(-1)
+      end
     end
   end
 end

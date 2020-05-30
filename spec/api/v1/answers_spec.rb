@@ -12,9 +12,7 @@ describe 'Answers API', type: :request do
     let!(:comments) { create_list(:comment, 3, commentable: answer, user: user) }
 
     let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :get }
-    end
+    it_behaves_like 'API Authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -75,6 +73,123 @@ describe 'Answers API', type: :request do
       end
 
 
+    end
+  end
+
+  describe 'POST /api/v1/questions/:question_id/answers, create new answer' do
+    let(:question) { create(:question) }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :post }
+    end
+
+    context 'authorized' do
+      let(:user) { create(:user) }
+      let(:access_token) { create(:access_token) }
+      let(:answer_params) { { body: 'Body test' } }
+      let(:answer_request) {
+        post api_path, params: {
+            access_token: access_token.token,
+            answer: answer_params
+        },
+             headers: headers
+      }
+      let(:answer_response) { json['answer'] }
+
+      it_behaves_like 'Status OK' do
+        let(:request) { answer_request }
+      end
+
+      it 'saves answer in database' do
+        expect { answer_request }.to change(Answer, :count).by(1)
+      end
+
+      it_behaves_like 'Check public fields' do
+        let(:request) { answer_request }
+        let(:fields) { %w[body user_id created_at updated_at] }
+        let(:reference) { Answer.first }
+        let(:resource_response) { answer_response }
+      end
+
+      it 'check question' do
+        answer_request
+        expect(answer_response['question']['id']).to eq question.id.as_json
+      end
+
+    end
+  end
+
+  describe 'PATCH /api/v1/questions/:question_id/answers/:id, update answer' do
+    let(:question) { create(:question) }
+    let!(:answer) { create(:answer, question: question)}
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :patch }
+    end
+
+    context 'authorized' do
+      let(:user) { create(:user) }
+      let(:access_token) { create(:access_token) }
+      let(:answer_params) { { body: 'New Body test'} }
+      let(:answer_request) {
+        patch api_path, params: {
+            access_token: access_token.token,
+            answer: answer_params
+        },
+             headers: headers
+      }
+      let(:answer_response) { json['answer'] }
+
+      it_behaves_like 'Status OK' do
+        let(:request) { answer_request }
+      end
+
+      it 'not changed answers count in database' do
+        expect { answer_request }.to change(Answer, :count).by(0)
+      end
+
+      it_behaves_like 'Check public fields' do
+        let(:request) { answer_request }
+        let(:fields) { %w[body user_id created_at updated_at] }
+        let(:reference) { Answer.first }
+        let(:resource_response) { answer_response }
+      end
+
+      it 'check question' do
+        answer_request
+        expect(answer_response['question']['id']).to eq question.id.as_json
+      end
+
+      it 'saves answer in database with new params' do
+        answer_request
+        expect(Answer.last.body).to eq answer_params[:body]
+      end
+    end
+  end
+
+
+  describe 'DELETE /api/v1/questions/:question_id/answers/:id, delete answer' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
+    let(:method) { :delete }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+      let(:answer_request) { delete api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'Status OK' do
+        let(:request) { answer_request }
+      end
+
+      it 'changed count answers in database' do
+        expect { answer_request }.to change(Answer, :count).by(-1)
+      end
     end
   end
 end

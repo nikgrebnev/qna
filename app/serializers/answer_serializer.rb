@@ -6,6 +6,8 @@ class AnswerSerializer < ActiveModel::Serializer
   has_many :comments
   has_many :links
 
+  belongs_to :question
+
   def files
     list = []
     object.files.each do |file|
