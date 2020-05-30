@@ -202,11 +202,11 @@ describe 'Questions API', type: :request do
       let(:question_response) { json['question'] }
 
       it_behaves_like 'Status OK' do
-          let(:request) { question_request }
-        end
+        let(:request) { question_request }
+      end
 
       it 'saves question in database' do
-          expect { question_request }.to change(Question, :count).by(1)
+        expect { question_request }.to change(Question, :count).by(1)
       end
 
       it_behaves_like 'Check public fields' do
