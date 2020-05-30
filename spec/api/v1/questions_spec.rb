@@ -18,9 +18,7 @@ describe 'Questions API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'return 200 status' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'Status OK'
 
       it 'returns list of questions' do
         expect(json['questions'].size).to eq 2
@@ -75,9 +73,7 @@ describe 'Questions API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'return 200 status' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'Status OK'
 
       it 'returns 1 question' do
         expect(json.size).to eq 1
@@ -160,9 +156,7 @@ describe 'Questions API', type: :request do
         let(:answer) { answers.first }
         let(:answer_response) { json['answers'].first }
 
-        it 'return 200 status' do
-          expect(response).to be_successful
-        end
+        it_behaves_like 'Status OK'
 
         it 'returns list of answers' do
           expect(json['answers'].size).to eq 6
