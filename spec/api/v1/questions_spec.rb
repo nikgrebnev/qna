@@ -59,14 +59,13 @@ describe 'Questions API', type: :request do
 
 
   describe 'GET /api/v1/questions/:id' do
+    let(:method) { :get }
     let(:user) { create(:user) }
     let!(:question) { create(:question, :with_file, user: user) }
 
     let(:api_path) { "/api/v1/questions/#{question.id}" }
 
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :get }
-    end
+    it_behaves_like 'API Authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -144,15 +143,14 @@ describe 'Questions API', type: :request do
   end
 
   describe 'GET /api/v1/questions/:id/answers' do
+    let(:method) { :get }
     let(:user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let!(:answers) { create_list(:answer, 6, question: question) }
 
     let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
 
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :get }
-    end
+    it_behaves_like 'API Authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -180,11 +178,10 @@ describe 'Questions API', type: :request do
   end
 
   describe 'POST /api/v1/questions, create new question' do
+    let(:method) { :post }
     let(:api_path) { "/api/v1/questions" }
 
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :post }
-    end
+    it_behaves_like 'API Authorizable'
 
     context 'authorized' do
       let(:user) { create(:user) }
