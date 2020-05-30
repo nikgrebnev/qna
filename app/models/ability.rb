@@ -20,7 +20,9 @@ class Ability
   end
 
   def user_rights
+
     guest_rights
+    can :me, User
     can :create, [Question, Answer, Comment]
     can :modify, [Question, Answer, Comment], user_id: user.id
 
@@ -37,6 +39,7 @@ class Ability
     end
 
     can :make_best, Answer, question: { user_id: user.id }
+
   end
 
   def admin_rights
