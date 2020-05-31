@@ -28,4 +28,16 @@ class User < ApplicationRecord
   def admin?
     is_a?(Admin)
   end
+
+  def subscribe!(question)
+    subscriptions.create!(question: question)
+  end
+
+  def unsubscribe!(question)
+    subscriptions.where(question: question).delete_all
+  end
+
+  def subscribed?(question)
+    subscriptions.exists?(question: question)
+  end
 end

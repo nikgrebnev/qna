@@ -23,4 +23,13 @@ RSpec.describe Question, type: :model do
   it 'have many attached files' do
     expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
+
+  describe 'Subscribe on create new answer' do
+    let(:user) { create(:user) }
+    let(:question_params) { { title: 'Tt', body: 'Tb' } }
+
+    it 'check count of subscriptions' do
+      expect{ user.questions.create!(question_params) }.to change(user.subscriptions, :count).by(1)
+    end
+  end
 end

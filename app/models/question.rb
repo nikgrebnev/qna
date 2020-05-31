@@ -14,4 +14,12 @@ class Question < ApplicationRecord
   has_many_attached :files
 
   validates :title, :body, :counter,  presence: true
+
+  after_create_commit :subscribe_user!
+
+  private
+
+  def subscribe_user!
+    user.subscribe!(self)
+  end
 end
