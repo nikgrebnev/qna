@@ -26,6 +26,7 @@ module Qna
                        request_specs: false
     end
 
+    config.active_job.queue_adapter = :sidekiq
     config.action_cable.disable_request_forgery_protection = true
   end
 end
