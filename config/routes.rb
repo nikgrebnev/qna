@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :answers, concerns: %i[votable commentable], shallow: true do
       patch :make_best, on: :member
     end
+    resources :subscriptions, only: %i[create destroy]
   end
 
   resources :attachments, only: :destroy

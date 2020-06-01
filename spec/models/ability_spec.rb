@@ -31,6 +31,9 @@ RSpec.describe Ability do
     let(:answer_other) { create(:answer, question: question_other, user: other_user) }
     let(:comment_user) { create(:comment, commentable: question_user, user: user) }
     let(:comment_other) { create(:comment, commentable: question_user, user: other_user) }
+    let(:other_user1) { create(:user) }
+    let(:subscription_other) { create(:subscription, question: question_user, user: other_user1) }
+    let(:subscription) { create(:subscription, question: question_other, user: user) }
 
     it { should be_able_to :read, :all}
     it { should_not be_able_to :manage, :all }
@@ -71,6 +74,12 @@ RSpec.describe Ability do
       it { should_not be_able_to :update, comment_other }
       it { should be_able_to :destroy, comment_user }
       it { should_not be_able_to :destroy, comment_other }
+    end
+
+    context 'Subscriptions' do
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, subscription }
+      it { should_not be_able_to :destroy, subscription_other }
     end
 
     context 'Attachments' do

@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   authorize_resource
   include Voted
   after_action :publish_question, only: [:create]
+  before_action :find_subscription, only: %i[show update]
 
   def index
     @questions = Question.all
@@ -67,5 +68,9 @@ class QuestionsController < ApplicationController
   
   def question_params
     params.require(:question).permit(:title, :body, files: [], links_attributes: [:name, :url], reward_attributes: [:name, :reward_file])
+  end
+
+  def find_subscription
+    @subscription = current_user.subscriptions.find_by(question_id: question) if current_user
   end
 end

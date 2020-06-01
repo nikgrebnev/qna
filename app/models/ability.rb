@@ -23,8 +23,8 @@ class Ability
 
     guest_rights
     can :me, User
-    can :create, [Question, Answer, Comment]
-    can :modify, [Question, Answer, Comment], user_id: user.id
+    can :create, [Question, Answer, Comment, Subscription]
+    can :modify, [Question, Answer, Comment, Subscription], user_id: user.id
 
     can :vote, [Question, Answer] do |votable|
       votable.user.id != user.id
