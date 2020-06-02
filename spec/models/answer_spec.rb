@@ -97,7 +97,7 @@ RSpec.describe Answer, type: :model do
       expect(answers.last).to be_best
     end
   end
-  
+
   describe 'Notification about new answer' do
     let(:user) { create(:user) }
     let(:question) { create(:question) }
