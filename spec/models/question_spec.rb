@@ -32,4 +32,14 @@ RSpec.describe Question, type: :model do
       expect{ user.questions.create!(question_params) }.to change(user.subscriptions, :count).by(1)
     end
   end
+
+  describe 'Reputation' do
+    let(:user) { create(:user) }
+    let(:question) { build(:question) }
+
+    it 'calls ReputationJob' do
+      expect(ReputationJob).to receive(:perform_later).with(question)
+      question.save!
+    end
+  end
 end

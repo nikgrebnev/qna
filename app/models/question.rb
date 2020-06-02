@@ -16,10 +16,15 @@ class Question < ApplicationRecord
   validates :title, :body, :counter,  presence: true
 
   after_create_commit :subscribe_user!
+  after_create :calculate_reputation
 
   private
 
   def subscribe_user!
     user.subscribe!(self)
+  end
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
   end
 end
