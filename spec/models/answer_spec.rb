@@ -97,25 +97,14 @@ RSpec.describe Answer, type: :model do
       expect(answers.last).to be_best
     end
   end
-
-  # describe 'Notification about new answer' do
-  #   let(:user) { create(:user) }
-  #   let(:question) { create(:question) }
-  #   let(:answer) { build(:answer, question: question, user: user) }
-  #
-  #   it 'calls Services::Notification#send' do
-  #     expect(Services::Notification).to receive(:send).with(answer)
-  #     answer.save!
-  #   end
-  # end
-  #
+  
   describe 'Notification about new answer' do
     let(:user) { create(:user) }
     let(:question) { create(:question) }
     let(:answer) { build(:answer, question: question, user: user) }
 
-    it 'calls NotifyAnswerJob' do
-      expect(NotifyAnswerJob).to receive(:perform_later).with(answer)
+    it 'calls NewAnswerDigestJob' do
+      expect(NewAnswerDigestJob).to receive(:perform_later).with(answer)
       answer.save!
     end
   end
