@@ -13,6 +13,8 @@ class Answer < ApplicationRecord
   validates :body, :counter, presence: true
   validates :best, uniqueness: { scope: :question_id }, if: :best?
 
+  after_create_commit :notify_users
+
   def make_best!
     transaction do
       self.question.answers.update_all(best: false)
@@ -20,4 +22,11 @@ class Answer < ApplicationRecord
       question.reward&.update!(user: user)
     end
   end
+
+  private
+
+  def notify_users
+    NewAnswerDigestJob.perform_later(self)
+  end
+
 end

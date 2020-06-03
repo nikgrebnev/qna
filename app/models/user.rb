@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :authorizations, dependent: :destroy
   has_many :rewards
   has_many :votes
+  has_many :subscriptions, dependent: :destroy
 
   def author?(object)
     id == object.user_id
@@ -26,5 +27,17 @@ class User < ApplicationRecord
 
   def admin?
     is_a?(Admin)
+  end
+
+  def subscribe!(question)
+    subscriptions.create!(question: question)
+  end
+
+  def unsubscribe!(question)
+    subscriptions.where(question: question).delete_all
+  end
+
+  def subscribed?(question)
+    subscriptions.exists?(question: question)
   end
 end

@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sdk'
+
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -30,6 +34,7 @@ Rails.application.routes.draw do
     resources :answers, concerns: %i[votable commentable], shallow: true do
       patch :make_best, on: :member
     end
+    resources :subscriptions, only: %i[create destroy]
   end
 
   resources :attachments, only: :destroy

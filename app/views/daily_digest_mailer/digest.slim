@@ -1,0 +1,13 @@
+h2
+  | Daily digest
+h4
+  | All the new questions asked today
+| =======================
+
+- @questions.each do |question|
+  h4
+    = question.title
+  h5
+    = question.body
+  | ====================
+  br

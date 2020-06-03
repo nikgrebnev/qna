@@ -6,6 +6,9 @@
   .question-vote
     = render 'shared/vote', resource: question
 
+  - if user_signed_in?
+    = render partial: 'subscriptions/subscription', locals: { resource: question }
+
   .question-attaches
     = render 'attachments/show', resource: question
 

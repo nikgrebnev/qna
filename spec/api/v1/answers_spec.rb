@@ -145,7 +145,7 @@ describe 'Answers API', type: :request do
       end
 
       it 'not changed answers count in database' do
-        expect { answer_request }.to change(Answer, :count).by(0)
+        expect { answer_request }.to_not change(Answer, :count)
       end
 
       it_behaves_like 'Check public fields' do
