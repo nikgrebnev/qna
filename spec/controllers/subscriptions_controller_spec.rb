@@ -26,7 +26,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       before { login(author) }
 
       it 'can not add duplicate subscriptions' do
-        expect { request_subscription }.to change(author.subscriptions, :count).by(0)
+        expect { request_subscription }.to_not change(author.subscriptions, :count)
       end
 
       it 'check return' do

@@ -3,7 +3,7 @@ class NewAnswerDigestService
     users = User.joins(:subscriptions).where(subscriptions: {question_id: answer.question})
 
     users.find_each do |user|
-      NewAnswerDigestMailer.notify(user, answer).deliver_later
+      NewAnswerDigestMailer.notify(user, answer).try(:deliver_later)
     end
   end
 end
