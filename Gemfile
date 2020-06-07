@@ -49,6 +49,8 @@ gem 'oj'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -64,6 +66,7 @@ group :development, :test do
   gem 'rspec-support', git: 'https://github.com/rspec/rspec-support'
 
   gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
