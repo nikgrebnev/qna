@@ -10,7 +10,6 @@ feature 'User can search' do
     visit questions_path
 
     ThinkingSphinx::Test.run do
-      sleep 5
       within '.search-form' do
         fill_in 'query', with: 'example'
         find(:select).find(:option, 'question').select_option
