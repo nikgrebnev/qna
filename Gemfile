@@ -52,6 +52,7 @@ gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv-rails'
+gem 'mini_racer'
 
 group :production do
   gem 'puma_worker_killer'
