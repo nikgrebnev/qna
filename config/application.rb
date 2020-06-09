@@ -28,5 +28,6 @@ module Qna
 
     config.active_job.queue_adapter = :sidekiq
     config.action_cable.disable_request_forgery_protection = true
+    config.action_cable.worker_pool_size = 4
   end
 end

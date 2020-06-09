@@ -1,1 +1,2 @@
 :concurrency: 10
+pidfile: ./tmp/pids/sidekiq.pid
