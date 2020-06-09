@@ -7,7 +7,7 @@ set :repo_url, "git@github.com:nikgrebnev/qna.git"
 set :deploy_to, "/home/deploy/qna"
 set :deploy_user, 'deploy'
 
-set :rvm_ruby_version, '.'
+set :rvm_ruby_version, '2.6.5'
 
 append :linked_files, ".env" #, 'config/master.key'
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "storage"
