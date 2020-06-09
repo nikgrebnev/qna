@@ -42,7 +42,7 @@ preload_app!
 plugin :tmp_restart
 
 before_fork do
-  unless ENV['RAILS_ENV']=='production'
+  if ENV['RAILS_ENV']=='production'
     PumaWorkerKiller.config do |config|
         config.ram           = 4096 # mb
         config.frequency     = 20    # seconds
