@@ -7,7 +7,19 @@ require "capistrano/rvm"
 require "capistrano/bundler"
 require "capistrano/rails"
 require "capistrano/puma"
-#require "capistrano/sidekiq"
+require "capistrano/sidekiq"
+
+# install_plugin Capistrano::Sidekiq
+# install_plugin Capistrano::Sidekiq::Monit
+# # sidekiq monit
+# :sidekiq_monit_templates_path => 'config/deploy/templates'
+# :sidekiq_monit_conf_dir => '/etc/monit/conf.d'
+# :sidekiq_monit_use_sudo => true
+# :monit_bin => '/usr/local/bin/monit'
+# :sidekiq_monit_default_hooks => true
+# :sidekiq_monit_group => nil
+# :sidekiq_service_name => "sidekiq_#{fetch(:application)}"
+
 #require "thinking_sphinx/capistrano"
 #require "whenever/capistrano"
 
