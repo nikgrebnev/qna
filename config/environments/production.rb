@@ -39,7 +39,11 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Mount Action Cable outside main process or domain.
-  # config.action_cable.mount_path = nil
+  # action_cable.url — это адрес, по которому будет подключаться клиент.
+  # mount_path это куда монтировать встроенный Action Cable сервер. Так как
+  # ты планируешь использовать standalone, то нужно это параметр сделать nil
+  # (иначе в веб-приложении тоже будет свой /cable).
+  config.action_cable.mount_path = nil
   config.action_cable.url = 'wss://test.dmmng.com/cable'
   config.action_cable.allowed_request_origins = [ 'http://test.dmmng.com', /http:\/\/.*dmmng.*/ ]
 
