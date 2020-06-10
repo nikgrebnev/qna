@@ -6,7 +6,5 @@ class CreateSubscriptions < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-
-    add_index :subscription_idx, %i[user_id question_id], unique: true
   end
 end
