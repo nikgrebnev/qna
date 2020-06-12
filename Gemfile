@@ -53,8 +53,9 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv-rails'
 #gem 'mini_racer'
-# gem 'redis-rails'
 gem 'hiredis'
+#gem 'memcached'
+#gem 'dalli'
 
 group :production do
   gem 'puma_worker_killer'

@@ -30,7 +30,11 @@ module Qna
     config.action_cable.disable_request_forgery_protection = true
     config.action_cable.worker_pool_size = 4
 
-    config.cache_store = :redis_cache_store,
-        { url: "redis://#{ENV["REDIS_IP"]}:#{ENV["REDIS_PORT"]}/0/cache", expires_in: 60.minutes }
+    # config.cache_store = :mem_cache_store, '127.0.0.1'
+    # (gem dalli)
+
+    # config.cache_store = :redis_cache_store,
+    #     { url: "redis://#{ENV["REDIS_IP"]}:#{ENV["REDIS_PORT"]}/0/cache", expires_in: 60.minutes }
+    # (gem redis + hiredis)
   end
 end
