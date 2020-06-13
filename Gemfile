@@ -54,8 +54,7 @@ gem 'thinking-sphinx'
 gem 'dotenv-rails'
 #gem 'mini_racer'
 gem 'hiredis'
-#gem 'memcached'
-#gem 'dalli'
+gem 'dalli'
 
 group :production do
   gem 'puma_worker_killer'
