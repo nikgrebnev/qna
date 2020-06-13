@@ -55,6 +55,7 @@ gem 'dotenv-rails'
 #gem 'mini_racer'
 gem 'hiredis'
 gem 'dalli'
+gem 'redis-session-store'
 
 group :production do
   gem 'puma_worker_killer'

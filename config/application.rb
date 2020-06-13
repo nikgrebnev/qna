@@ -29,5 +29,18 @@ module Qna
     config.active_job.queue_adapter = :sidekiq
     config.action_cable.disable_request_forgery_protection = true
     config.action_cable.worker_pool_size = 4
+
+    # config.session_store :cache_store, key: 'session'
+
+    config.session_store :redis_session_store, {
+        key: 'session',
+        redis: {
+            expire_after: 3.days,  # cookie expiration
+            ttl: 3.days,           # Redis expiration, defaults to 'expire_after'
+            key_prefix: 'session:',
+            url: "redis://#{ENV["REDIS_IP"]}:#{ENV["REDIS_PORT"]}/0"
+        }
+    }
+
   end
 end

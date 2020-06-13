@@ -39,6 +39,7 @@ class AnswersController < ApplicationController
 
   def answer
     @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : Answer.new(answer_params.merge(question: question))
+    # @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]).includes(:comments) : Answer.new(answer_params.merge(question: question))
   end
 
   def question
