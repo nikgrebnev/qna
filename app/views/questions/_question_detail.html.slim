@@ -1,50 +1,56 @@
-.question data={id: question.id}
+- cache question do
+  .question data={id: question.id}
 
-  h1= question.title
-  p= question.body
+    h1= question.title
+    p= question.body
 
-  .question-vote
-    = render 'shared/vote', resource: question
+    .question-vote
+      = render 'shared/vote', resource: question
 
+    .question-attaches
+      = render 'attachments/show', resource: question
+
+    .question-links
+      = render 'links/show', resource: question
+
+    .answers
+      = render question.answers
+
+    .question-comments
+      = render question.comments
+
+.question-actions
   - if user_signed_in?
-    = render partial: 'subscriptions/subscription', locals: { resource: question }
+    = render partial: 'subscriptions/subscription', locals: {resource: question}
 
-  .question-attaches
-    = render 'attachments/show', resource: question
+  - if can? :create, Comment
+    = render 'comments/form', resource: question
 
-  .question-links
-    = render 'links/show', resource: question
+.question-edit
+  - if can? :modify, question
+    = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+    = link_to 'Delete', question, method: :delete
 
-  - if question.reward.present? && current_user&.author?(question)
-    .reward-block
+    .question-errors
+      = render 'shared/errors', resource: question
+
+    = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
       p
-        | Reward
-        = question.reward.name
-        img src=url_for(question.reward.reward_file)
+        = f.label :title, 'Title'
+        = f.text_area :title
+      p
+        = f.label :body, 'Body'
+        = f.text_area :body
+      = render 'attachments/form', f: f
+      = render 'links/form', f: f
+      p= f.submit 'Save'
 
-  .question-comments
-    = render question.comments
-    - if can? :create, Comment
-      = render 'comments/form', resource: question
-
-  .question-edit
-    - if can? :modify, question
-      = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
-      = link_to 'Delete', question, method: :delete
-
-      .question-errors
-        = render 'shared/errors', resource: question
-
-      = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
+    - if question.reward.present? && current_user&.author?(question)
+      .reward-block
         p
-          = f.label :title, 'Title'
-          = f.text_area :title
-        p
-          = f.label :body, 'Body'
-          = f.text_area :body
-        = render 'attachments/form', f: f
-        = render 'links/form', f: f
-        p= f.submit 'Save'
+          | Reward
+          = question.reward.name
+          img src=url_for(question.reward.reward_file)
 
 
   = tag.div class: 'test div', data: {id: question.id}

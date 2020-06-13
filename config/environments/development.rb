@@ -14,19 +14,24 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
-    config.action_controller.perform_caching = true
-    config.action_controller.enable_fragment_cache_logging = true
+  config.action_controller.perform_caching = true
+  # config.action_controller.enable_fragment_cache_logging = false
+  config.action_controller.enable_fragment_cache_logging = true
 
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
-    }
-  else
-    config.action_controller.perform_caching = false
+  # config.cache_store = :memory_store, { size: 512.megabytes, expires_in: 60.minutes }
 
-    config.cache_store = :null_store
-  end
+  # config.cache_store = :file_store, "tmp/cache"
+
+  config.cache_store = :mem_cache_store, '127.0.0.1', { pool_size: 5, pool_timeout: 1, expires_in: 60.minutes }
+  # (gem dalli)
+
+  # config.cache_store = :redis_cache_store,
+  #     { url: "redis://#{ENV["REDIS_IP"]}:#{ENV["REDIS_PORT"]}/0/cache", expires_in: 60.minutes }
+  # (gem redis + hiredis)
+
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{2.days.to_i}"
+  }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -62,5 +67,4 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
 end

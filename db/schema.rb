@@ -155,20 +155,6 @@ ActiveRecord::Schema.define(version: 2020_05_31_135407) do
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
-  create_table "subsriptions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "question_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_subsriptions_on_question_id"
-    t.index ["user_id"], name: "index_subsriptions_on_user_id"
-  end
-
-  create_table "t", id: false, force: :cascade do |t|
-    t.integer "id"
-    t.boolean "rate"
-  end
-
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -206,7 +192,5 @@ ActiveRecord::Schema.define(version: 2020_05_31_135407) do
   add_foreign_key "rewards", "users"
   add_foreign_key "subscriptions", "questions"
   add_foreign_key "subscriptions", "users"
-  add_foreign_key "subsriptions", "questions"
-  add_foreign_key "subsriptions", "users"
   add_foreign_key "votes", "users"
 end

@@ -1,7 +1,5 @@
 = render 'question_detail'
 
-.answers
-  = render question.answers
 
 - if can? :create, Answer
   = render 'answers/form'
