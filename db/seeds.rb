@@ -20,8 +20,6 @@ user = User.create!(
     :password              => "password123",
     :password_confirmation => "password123"
 )
-# user.skip_confirmation!
-# user.save!
 
 (1..10).each do |i|
   puts "question #{i}"
