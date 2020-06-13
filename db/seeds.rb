@@ -6,24 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-=begin
-puts "users"
-users_arr=[]
-(1..1000).each do |u|
-  user = User.new(
-      :email                 => "nikolaygrebnev@yandex.ru",
-      :password              => "password#{u}",
-      :password_confirmation => "password#{u}",
-      :first_name            => "Name #{u}",
-      :last_name             => "Lant name #{u}"
-  )
-  user.skip_confirmation!
-  user.type = "Admin" if u == 1
-  user.save!
-  users_arr << user
-end
-=end
-
 # user = User.new(
 #     :email                 => "nikolaygrebnev@yandex.ru",
 #     :password              => "password123",
@@ -41,7 +23,7 @@ user = User.create!(
 # user.skip_confirmation!
 # user.save!
 
-(1..1000).each do |i|
+(1..10).each do |i|
   puts "question #{i}"
   question = Question.create(title: "Question #{i}", body: "Question #{i} body", user: user)
   (1..50).each do |t|
