@@ -18,7 +18,7 @@ Rails.application.configure do
   # config.action_controller.enable_fragment_cache_logging = false
   config.action_controller.enable_fragment_cache_logging = true
 
-  config.cache_store = :memory_store
+  config.cache_store = :memory_store, { size: 512.megabytes, expires_in: 60.minutes }
 
   # config.cache_store = :file_store, "tmp/cache"
 
